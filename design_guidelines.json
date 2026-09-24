@@ -1,0 +1,310 @@
+{
+  "theme": "warm_editorial_agency",
+  "archetype": "ARCHETYPE 5: LUXURY & EDITORIAL WARMTH (Agency / Nightlife / Culture)",
+  "design_intent": "Warm editorial creative agency aesthetic for 'nocap.' — featuring warm cream/linen canvas, high-contrast crisp typography (condensed display + italicized serif accents), lush nightlife & cocktail lifestyle photography, interactive horizontal accordion services slider, real-time replaceable brand logo wall with 12+ brand slots, dynamic interactive client lead split showcase with 5 verifiable case studies, dual data story blocks, interactive proposal inquiry modal, and tactile micro-animations.",
+  "colors": {
+    "surfaces": [
+      {
+        "name": "page",
+        "kind": "solid",
+        "bg": "#FBF8F2",
+        "on_bg": "#121212",
+        "on_bg_muted": "#57534E",
+        "roles": {
+          "link": "#14532D",
+          "error": "#B91C1C",
+          "success": "#15803D"
+        }
+      },
+      {
+        "name": "card_light",
+        "kind": "solid",
+        "bg": "#FFFFFF",
+        "on_bg": "#111827",
+        "on_bg_muted": "#6B7280",
+        "roles": {
+          "link": "#166534",
+          "error": "#DC2626",
+          "success": "#16A34A"
+        }
+      },
+      {
+        "name": "dark_story_block",
+        "kind": "solid",
+        "bg": "#141414",
+        "on_bg": "#F5F5F4",
+        "on_bg_muted": "#A8A29E",
+        "roles": {
+          "link": "#86EFAC",
+          "error": "#FCA5A5",
+          "success": "#4ADE80"
+        }
+      },
+      {
+        "name": "forest_pill",
+        "kind": "solid",
+        "bg": "#143D2B",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#D1FAE5"
+      },
+      {
+        "name": "lime_pill",
+        "kind": "solid",
+        "bg": "#C6F24E",
+        "on_bg": "#0F172A",
+        "on_bg_muted": "#334155"
+      },
+      {
+        "name": "hero_slider",
+        "kind": "image",
+        "contrast_against": "#0A0A0A",
+        "guarantee": "scrim: linear-gradient(180deg, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.7) 100%)",
+        "on_bg": "#FFFFFF",
+        "on_bg_muted": "#E5E5E5",
+        "roles": {
+          "link": "#86EFAC",
+          "error": "#FCA5A5",
+          "success": "#86EFAC"
+        }
+      },
+      {
+        "name": "accordion_active_card",
+        "kind": "solid",
+        "bg": "#1E241E",
+        "on_bg": "#FAFAF9",
+        "on_bg_muted": "#D6D3D1",
+        "roles": {
+          "link": "#C6F24E",
+          "error": "#F87171",
+          "success": "#4ADE80"
+        }
+      },
+      {
+        "name": "accordion_collapsed_card",
+        "kind": "solid",
+        "bg": "#EFECE6",
+        "on_bg": "#292524",
+        "on_bg_muted": "#78716C"
+      },
+      {
+        "name": "footer_surface",
+        "kind": "solid",
+        "bg": "#0D0F0E",
+        "on_bg": "#FBF8F2",
+        "on_bg_muted": "#A1A1AA",
+        "roles": {
+          "link": "#C6F24E",
+          "error": "#F87171",
+          "success": "#4ADE80"
+        }
+      }
+    ],
+    "accent": "#143D2B",
+    "on_accent": "#FFFFFF",
+    "highlight_lime": "#C6F24E",
+    "on_highlight_lime": "#0F172A",
+    "warm_beige_border": "#E7E2D8",
+    "warm_beige_subtle": "#F3EFE6"
+  },
+  "typography": {
+    "font_families": {
+      "heading": "'Lora Variable', serif",
+      "display_sans": "'Space Grotesk Variable', sans-serif",
+      "body": "'DM Sans Variable', sans-serif",
+      "mono": "'JetBrains Mono Variable', monospace"
+    },
+    "scale_px": {
+      "display": 60,
+      "h1": 48,
+      "h2": 36,
+      "h3": 24,
+      "body": 16,
+      "caption": 14
+    },
+    "rules": {
+      "headings_pairing": "Mix uppercase condensed tracking-tighter with italic serif flourishes (e.g. 'WE DON'T SELL PACKAGES.' in bold grotesque + 'we solve problems.' in italicized Lora serif).",
+      "body_line_height": "leading-relaxed",
+      "labels": "uppercase tracking-[0.2em] text-xs font-semibold"
+    }
+  },
+  "entry_surfaces": {
+    "/": "Warm editorial agency hero — top photo carousel cards with opening hook headline 'CULTURE ARCHITECTS & BRAND CATALYSTS', pill CTA, live brand marquee, and split client showcase"
+  },
+  "visual_enhancers": {
+    "border_radii": "rounded-3xl (24px) for hero and case cards, rounded-full for pills and tags, rounded-2xl for stat blocks",
+    "textures": "Subtle paper noise background filter, soft ambient shadows (shadow-[0_12px_40px_rgba(0,0,0,0.06)])",
+    "borders": "1px solid rgba(0, 0, 0, 0.08) in light mode; 1px solid rgba(255, 255, 255, 0.12) on dark panels",
+    "marquee": "Continuous smooth marquee for client logo wall with logo upload/customization toolbar"
+  },
+  "image_urls": {
+    "hero_slides": [
+      {
+        "url": "https://images.unsplash.com/photo-1699730164892-d7c433524ff3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85",
+        "title": "VIP Cultural Soiree & Launch",
+        "tag": "Nightlife & Spirits",
+        "description": "Exclusive launch party with curated hospitality and brand integration"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwyfHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85",
+        "title": "Concert Stage Experience",
+        "tag": "Festival & Events",
+        "description": "Mass-reach music festival curation and live activations"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+        "title": "Artisanal Spirits Storytelling",
+        "tag": "Brand Identity",
+        "description": "Cinematic visual design and cocktail luxury positioning"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwzfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+        "title": "Mixology Experience Tour",
+        "tag": "Influencer Activations",
+        "description": "Experiential masterclasses and digital viral campaigns"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+        "title": "Arena Scale Activations",
+        "tag": "Experiential Curation",
+        "description": "Transforming spaces into iconic brand moments"
+      }
+    ],
+    "client_case_studies": [
+      {
+        "id": "conan",
+        "client": "Conan Craft Beer",
+        "stat": "+750%",
+        "metric_label": "Organic Reach Surge",
+        "tags": ["Brand Integration", "Social Strategy"],
+        "description": "Repositioned craft brew for tier-1 metropolitan cocktail and brewery culture.",
+        "image_url": "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "taj",
+        "client": "Taj & Westin Hospitality",
+        "stat": "95K+",
+        "metric_label": "Influencer Engagements",
+        "tags": ["Luxury Hospitality", "VIP Curation"],
+        "description": "Curated secret chef tables and luxury weekend festival campaigns.",
+        "image_url": "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwzfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "tinder",
+        "client": "Tinder Mixers Tour",
+        "stat": "+30M",
+        "metric_label": "Video Views & Impressions",
+        "tags": ["Meta & TikTok Ads", "Youth Culture"],
+        "description": "Viral city-wide dating mixer offline pop-ups turned digital social phenomenon.",
+        "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwyfHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "stoli_pistola",
+        "client": "Pistola & Nicobar Gin",
+        "stat": "400K+",
+        "metric_label": "Direct Bar Bottle Sales",
+        "tags": ["Sourcing & Distribution", "Bar Takeovers"],
+        "description": "High-octane agave and botanical gin pop-ups across 18 premier cities.",
+        "image_url": "https://images.unsplash.com/photo-1500217052183-bc01eee1a74e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwyfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "simba",
+        "client": "Simba Roar Events",
+        "stat": "4.8x",
+        "metric_label": "Ad Spend ROI (ROAS)",
+        "tags": ["AI Ad Targeting", "Creator Networks"],
+        "description": "Data-backed UGC ads scaling conversions with real-time ChatGPT ad iteration.",
+        "image_url": "https://images.unsplash.com/photo-1578736641330-3155e606cd40?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHw0fHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85"
+      }
+    ],
+    "services_images": {
+      "social_media": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwxfHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85",
+      "influencer_marketing": "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwzfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+      "video_editing": "https://images.unsplash.com/photo-1578736641330-3155e606cd40?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHw0fHxuaWdodGxpZmUlMjBwYXJ0eSUyMGV2ZW50fGVufDB8fHx8MTc5MDI4MjYxOXww&ixlib=rb-4.1.0&q=85",
+      "meta_ads": "https://images.unsplash.com/photo-1597290282695-edc43d0e7129?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+      "brand_integration": "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+      "sourcing": "https://images.unsplash.com/photo-1500217052183-bc01eee1a74e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwyfHxjb2NrdGFpbCUyMGJhciUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85",
+      "event_management": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwzfHxjb25jZXJ0JTIwY3Jvd2QlMjBmZXN0aXZhbHxlbnwwfHx8fDE3OTAyODI2MjB8MA&ixlib=rb-4.1.0&q=85"
+    }
+  },
+  "sections_breakdown": [
+    {
+      "order": 1,
+      "id": "navbar",
+      "name": "Navigation Bar",
+      "description": "Sticky pill/floating navbar with crystal glass effect (bg-[#FBF8F2]/90 backdrop-blur-md), logo 'nocap.', navigation anchor links (Work, Clients, Impact, Services, Story), 'Book a Discovery Call' CTA button with green dot pulse."
+    },
+    {
+      "order": 2,
+      "id": "hero_slider",
+      "name": "Opening Hook & Photo Carousel (Reference 1)",
+      "description": "Hook headline: 'CULTURE-FIRST AGENCY // CRAFTING NO-BS REVENUE EXPERIENCES'. Hero carousel of 5 rounded-3xl photo cards with navigation arrows, category tags, interactive dragging/autoplay, and side-by-side 'WE DON'T SELL PACKAGES. WE SOLVE PROBLEMS.' card with 'OUR STORY' dark block."
+    },
+    {
+      "order": 3,
+      "id": "brand_logo_wall",
+      "name": "Replaceable Brand Logo Wall (10-15 Slots)",
+      "description": "Marquee / grid of 14 iconic brands: Conan Beer, Taj Hotels, Westin, Tinder, Simba, Stoli Vodka, Nicobar Gin, Tito's Handmade Vodka, Greater Than, Kati Patang, Casa Claro, Pistola Agave, Catwalk Botanics, Monkey Shoulder. Features an interactive 'Replace / Manage Logos' live modal so users can test uploading or changing client logos."
+    },
+    {
+      "order": 4,
+      "id": "clients_lead",
+      "name": "Our Clients in the Lead (Reference 2)",
+      "description": "Split screen layout: Left sticky column with 'OUR CLIENTS IN THE LEAD' large display heading, copy, and lime accent button ('Explore Full Portfolio'). Right column features 5 high-impact client outcome cards with oversized metrics (+750%, 95K+, +30M, 400K+, 4.8x), badge tags, outcome descriptions, and preview photo."
+    },
+    {
+      "order": 5,
+      "id": "stats_strip",
+      "name": "4-Column Stats Strip (Reference 3)",
+      "description": "Clean 4-column metrics block with warm dividers: [ $74M+ Generated Revenue | 95% Retention Rate | +225 Campaigns Delivered | 92% Viral Conversion ] with subtle count-up animation."
+    },
+    {
+      "order": 6,
+      "id": "numbers_story",
+      "name": "Numbers Mean More When They Tell A Story (Reference 4)",
+      "description": "Editorial grid layout with statement headline 'Numbers mean more when they tell a story.' and 6 structured narrative stat cards (Creator Network, Audience Footprint, Average ROAS, Organic Lift, Production Speed, Global Reach)."
+    },
+    {
+      "order": 7,
+      "id": "our_expertise_accordion",
+      "name": "Our Expertise Accordion Slider (Reference 5)",
+      "description": "Interactive horizontal accordion slider containing 7 core services: 1. Social Media Management, 2. Influencer Marketing, 3. Video & Graphic Editing, 4. Meta & ChatGPT Ads, 5. Brand Integration, 6. Sourcing & Production, 7. Event Management. Click or hover expands active panel showing high-res image, tag pills, deliverable list, and quote CTA, while collapsing others into sleek vertical typography ribbons."
+    },
+    {
+      "order": 8,
+      "id": "cta_contact",
+      "name": "Dark Kinetic Close & Interactive Brief Modal",
+      "description": "Bold black section with oversized typography 'READY TO STOP PLAYING SMALL?' and an interactive instant project estimation/inquiry drawer with budget selector, deliverables checklist, and instant confirmation toast."
+    },
+    {
+      "order": 9,
+      "id": "footer",
+      "name": "Editorial Footer",
+      "description": "Deep obsidian/forest footer with oversized 'nocap.' brand typography, newsletter subscription, quick links, office hubs (Mumbai, Bengaluru, Delhi, Dubai), and copyright notice."
+    }
+  ],
+  "motion_and_interactions": {
+    "library": "motion/react",
+    "patterns": {
+      "stagger_fade_in": "Cards stagger in on scroll with y: 24 to 0, opacity 0 to 1, ease [0.22, 1, 0.36, 1]",
+      "accordion_expand": "layout transition on spring { stiffness: 300, damping: 30 } for smooth panel expansion",
+      "carousel_slide": "Smooth drag or arrow clicks with index pagination and auto-advance toggle",
+      "hover_cards": "Subtle scale-102 and shadow lift on client case cards"
+    }
+  },
+  "accessibility_requirements": {
+    "min_contrast": "4.5:1 text to surface ratio strictly enforced across light and dark cards",
+    "keyboard_nav": "Full arrow key support on accordion and carousel with visible focus ring (focus:ring-2 focus:ring-[#143D2B])",
+    "reduced_motion": "All motion transitions disable automatically when prefers-reduced-motion: reduce is detected"
+  },
+  "instructions_to_main_agent": [
+    "1. Replace default App.tsx / Home.tsx with the complete, highly polished 'nocap.' creative agency landing page matching the 5 user reference screenshots.",
+    "2. Fonts: Use @fontsource-variable/lora for editorial serif headings and @fontsource-variable/dm-sans for clean modern body text. Import them in src/index.css.",
+    "3. Hero Slider: Build a responsive carousel with smooth transitions, autoplay toggle, prev/next arrows, and the iconic 'WE DON'T SELL PACKAGES' story block beside it.",
+    "4. Brand Wall: Provide 12-15 brand logo tiles (Conan, Taj, Westin, Tinder, Simba, Stoli, Nicobar Gin, Tito's, Greater Than, Kati Patang, Casa Claro, Pistola, Catwalk Botanics) with a live 'Edit / Replace Logos' dialog so users can customize them.",
+    "5. Clients in Lead: Build the exact split layout with left sticky header and right stacked cards showing +750%, 95K+, +30M, 400K+, 4.8x with tags and thumbnail visuals.",
+    "6. Dual Stats Sections: Include both the 4-column metric strip ($74M, 95%, +225, 92%) and the 6-item 'Numbers mean more when they tell a story' editorial grid.",
+    "7. Services Accordion Slider: Replicate the 5th reference image — a horizontal accordion slider with 7 services (Social Media, Influencers, Video/Graphic Editing, Meta/ChatGPT Ads, Brand Integration, Sourcing, Event Management). The active panel expands to show image + description + tags, collapsed panels show rotated vertical titles.",
+    "8. Interactive Contact / Brief Drawer: Add a functional 'Start a Project' modal with budget sliders, service toggles, date selector, and Sonner toast feedback.",
+    "9. Ensure every interactive element has kebab-case role-based data-testid attributes."
+  ]
+}
