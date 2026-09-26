@@ -74,6 +74,7 @@ export default function Expertise() {
                       src={imgSrc}
                       alt={service.title}
                       loading="lazy"
+                      style={{ objectPosition: content.imagePos?.[`service.${i}`] }}
                       className="h-48 w-full rounded-2xl object-cover lg:h-56"
                     />
                     {editMode && (

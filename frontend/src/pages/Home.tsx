@@ -8,6 +8,7 @@ import LogoWall from "@/components/landing/LogoWall";
 import ClientsLead from "@/components/landing/ClientsLead";
 import Process from "@/components/landing/Process";
 import NumbersStory from "@/components/landing/NumbersStory";
+import ResultsGallery from "@/components/landing/ResultsGallery";
 import ArtBreak from "@/components/landing/ArtBreak";
 import Expertise from "@/components/landing/Expertise";
 import Footer from "@/components/landing/Footer";
@@ -26,6 +27,7 @@ export default function Home() {
           <ClientsLead />
           <Process />
           <NumbersStory />
+          <ResultsGallery />
           <ArtBreak />
           <Expertise />
         </main>

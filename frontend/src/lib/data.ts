@@ -174,8 +174,21 @@ export const SERVICES: Service[] = [
   },
 ];
 
-export const DEFAULT_ART =
-  "https://static.prod-images.emergentagent.com/jobs/a95990dc-61d9-443d-b7e0-2e5cd2382ef4/images/673ea68c7d4fa0aedb7650bb641e1bfd5d9d776c99cdb9f2efcf625fb5fb0798.jpeg";
+export const DEFAULT_ART = "/art-default.png";
+
+export interface ResultCard {
+  views: string;
+  likes: string;
+  image: string;
+}
+
+export const RESULTS: ResultCard[] = [
+  { views: "159K", likes: "7,353", image: `${IMG}/2654b75a8024742bb888fea3eb756eeb6bb343f243710263a8745c87980a9682.jpeg` },
+  { views: "52.3K", likes: "2,114", image: `${IMG}/ae3bb19ef591b0266afd463c1c6f1e3c7175d562971f50b0245aed51e8c6734f.jpeg` },
+  { views: "38.5K", likes: "1,908", image: `${IMG}/199893cf5dc20bd2bdc862d647825c6293c90072cb574cd8dbecbcce6e124e34.jpeg` },
+  { views: "34.4K", likes: "1,455", image: `${IMG}/1b4ebe023423fae0b18d22e8eb5d03f10719ce290a0ccfaa56792aa92738d47c.jpeg` },
+  { views: "27.7K", likes: "1,203", image: `${IMG}/fbddfedc762ccffc8dc12b0ef4f7c883948a648638ce7fce6181e6187899c8bf.jpeg` },
+];
 
 export const TEXTS: Record<string, string> = {
   "nav.cta": "Pull Up",
@@ -216,7 +229,10 @@ export const TEXTS: Record<string, string> = {
   "footer.email": "Connect.nocap@gmail.com",
   "footer.hubs": "Mumbai · Bengaluru · Delhi · Dubai",
   "footer.copyright": "© 2026 NOCAP — All noise, no cap.",
-  "social.instagram": "https://instagram.com/connect.nocap",
+  "social.instagram": "https://instagram.com/nocapconnect",
+  "results.h1": "We're serving",
+  "results.accent": "results.",
+  "results.sub": "Real reels. Real numbers. Straight from our clients' feeds.",
 };
 
 export interface Enquiry {

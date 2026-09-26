@@ -42,9 +42,13 @@ interface ImgFieldProps {
   value?: string;
   onChange: (url: string) => void;
   testId?: string;
+  pos?: string;
+  onPosChange?: (pos: string) => void;
 }
 
-export function ImgField({ label, value, onChange, testId }: ImgFieldProps) {
+const POS_GRID = ["0% 0%", "50% 0%", "100% 0%", "0% 50%", "50% 50%", "100% 50%", "0% 100%", "50% 100%", "100% 100%"];
+
+export function ImgField({ label, value, onChange, testId, pos, onPosChange }: ImgFieldProps) {
   const [busy, setBusy] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +70,12 @@ export function ImgField({ label, value, onChange, testId }: ImgFieldProps) {
       <Label className="text-xs text-[#57534E]">{label}</Label>
       <div className="flex items-center gap-3">
         {value ? (
-          <img src={value} alt={label} className="h-12 w-16 rounded-lg bg-[#F3EFE6] object-cover" />
+          <img
+            src={value}
+            alt={label}
+            style={{ objectPosition: pos ?? "50% 50%" }}
+            className="h-12 w-16 rounded-lg bg-[#F3EFE6] object-cover"
+          />
         ) : (
           <div className="h-12 w-16 rounded-lg bg-[#F3EFE6]" />
         )}
@@ -91,6 +100,24 @@ export function ImgField({ label, value, onChange, testId }: ImgFieldProps) {
           {busy ? <LoaderCircle size={13} className="animate-spin" /> : <ImagePlus size={13} />}
           {value ? "Replace" : "Upload"}
         </Button>
+        {onPosChange && (
+          <div className="flex items-center gap-2" title="Adjust which part of the picture shows">
+            <span className="font-mono text-[10px] tracking-[0.1em] text-[#57534E] uppercase">Focus</span>
+            <div className="grid grid-cols-3 gap-1" data-testid={testId ? `${testId}-pos` : undefined}>
+              {POS_GRID.map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  aria-label={`Focus ${v}`}
+                  onClick={() => onPosChange(v)}
+                  className={`h-2.5 w-2.5 cursor-pointer rounded-full transition-colors duration-200 ${
+                    (pos ?? "50% 50%") === v ? "bg-[#143D2B] ring-2 ring-[#C6F24E]" : "bg-[#E7E2D8] hover:bg-[#C6F24E]"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

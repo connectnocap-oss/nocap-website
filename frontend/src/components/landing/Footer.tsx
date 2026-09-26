@@ -8,6 +8,7 @@ import type { Enquiry } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
 import { useText } from "@/lib/content";
 import LogoMark from "./LogoMark";
+import Starburst from "./Starburst";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -48,7 +49,8 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               className="mb-5 font-mono text-xs tracking-[0.25em] text-[#C6F24E] uppercase"
             >
-              {t("footer.eyebrow")}
+              {t("footer.eyebrow")}{" "}
+              <Starburst className="inline h-4 w-4 align-text-top text-[#C6F24E] [animation:spin_14s_linear_infinite]" />
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 28 }}

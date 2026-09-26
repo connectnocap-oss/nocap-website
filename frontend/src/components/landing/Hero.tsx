@@ -141,6 +141,7 @@ export default function Hero() {
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: content.imagePos?.[`hero.${index}`] }}
               data-testid="hero-slide-image"
             />
           </AnimatePresence>

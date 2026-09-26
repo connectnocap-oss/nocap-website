@@ -36,6 +36,13 @@ Build a landing page for "nocap" matching 5 reference screenshots: (1) hero phot
 - Enquiry email notifications to Connect.nocap@gmail.com via Emergent-managed Resend (verified 202 Accepted)
 - Collage art-break band (original AI-generated piece, parallax + spinning starburst SVGs); bigger logo wall; tightened section gaps; stats strip removed; hero slide titles removed; footer logo reduced; live Instagram + mail icons
 
+## Implemented (2026-09-26, v4)
+- Instagram icon wired to instagram.com/nocapconnect (default + stored content both updated)
+- Art break band now uses the user's own faces-collage artwork (`/art-default.png`), still replaceable in admin
+- New "We're serving results." gallery: 5 floating tilted reel-result cards (views + likes chips, hover lift, gentle bob) — images, view/like counts all editable in admin
+- Image focus adjust: every admin image field has a 3×3 focus-dot picker (object-position) for hero slides, client cards, expertise panels, art banner, and result cards
+- Extra graphic accents: spinning starbursts on art break, results gallery, and footer eyebrow
+
 ## Backlog
 - P1: Admin view for enquiries (protected route or simple list page)
 - P1: Real social links + real contact email for NOCAP

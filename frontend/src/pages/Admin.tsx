@@ -9,7 +9,7 @@ import {
   useSiteContent,
   type SiteContent,
 } from "@/lib/content";
-import { CLIENT_RESULTS, DEFAULT_ART, DEFAULT_BRANDS, HERO_SLIDES, SERVICES, STORY_STATS, TEXTS } from "@/lib/data";
+import { CLIENT_RESULTS, DEFAULT_ART, DEFAULT_BRANDS, HERO_SLIDES, RESULTS, SERVICES, STORY_STATS, TEXTS } from "@/lib/data";
 import LogoMark from "@/components/landing/LogoMark";
 import { ImgField, Section, Txt } from "@/components/admin/fields";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,8 @@ function buildDraft(c: SiteContent): SiteContent {
     heroImages: { ...(c.heroImages ?? {}) },
     clientImages: { ...(c.clientImages ?? {}) },
     serviceImages: { ...(c.serviceImages ?? {}) },
+    resultImages: { ...(c.resultImages ?? {}) },
+    imagePos: { ...(c.imagePos ?? {}) },
     brandLogos: DEFAULT_BRANDS.map((b, i) => {
       const o = c.brandLogos?.[i];
       return { name: o?.name ?? b.name, ...(o?.image ? { image: o.image } : {}) };
@@ -36,6 +38,10 @@ function buildDraft(c: SiteContent): SiteContent {
       title: c.services?.[i]?.title ?? d.title,
       description: c.services?.[i]?.description ?? d.description,
       tags: c.services?.[i]?.tags ?? d.tags,
+    })),
+    results: RESULTS.map((d, i) => ({
+      views: c.results?.[i]?.views ?? d.views,
+      likes: c.results?.[i]?.likes ?? d.likes,
     })),
     storyStats: (c.storyStats ?? STORY_STATS).map((s) => [...s] as [string, string]),
     artImage: c.artImage,
@@ -91,6 +97,14 @@ const TEXT_GROUPS: { title: string; fields: [string, string, boolean?][] }[] = [
       ["work.accent", "Italic accent"],
       ["work.body", "Body text", true],
       ["work.cta", "Link label"],
+    ],
+  },
+  {
+    title: "Results gallery",
+    fields: [
+      ["results.h1", "Heading"],
+      ["results.accent", "Italic accent"],
+      ["results.sub", "Subtext", true],
     ],
   },
   { title: "Art break", fields: [["art.caption", "Caption chip"]] },
@@ -188,6 +202,9 @@ export default function Admin() {
   const setText = (k: string, v: string) =>
     setDraft((d) => d && { ...d, texts: { ...(d.texts ?? {}), [k]: v } });
 
+  const setPos = (k: string, v: string) =>
+    setDraft((d) => d && { ...d, imagePos: { ...(d.imagePos ?? {}), [k]: v } });
+
   const save = async () => {
     setSaving(true);
     try {
@@ -234,7 +251,8 @@ export default function Admin() {
 
       <main className="mx-auto max-w-5xl space-y-8 px-6 py-10" data-testid="admin-panel">
         <p className="text-sm text-[#57534E]">
-          Edit anything below, upload images, then hit <strong>Save all changes</strong> — the public site updates instantly.
+          Edit anything below, upload images, adjust the focus dots to crop each picture, then hit{" "}
+          <strong>Save all changes</strong> — the public site updates instantly.
         </p>
 
         {TEXT_GROUPS.map((g) => (
@@ -262,6 +280,8 @@ export default function Admin() {
                 onChange={(u) =>
                   setDraft((d) => d && { ...d, heroImages: { ...(d.heroImages ?? {}), [String(i)]: u } })
                 }
+                pos={draft.imagePos?.[`hero.${i}`]}
+                onPosChange={(p) => setPos(`hero.${i}`, p)}
                 testId={`admin-hero-${i}`}
               />
             ))}
@@ -358,6 +378,8 @@ export default function Admin() {
                 onChange={(u) =>
                   setDraft((d) => d && { ...d, clientImages: { ...(d.clientImages ?? {}), [String(i)]: u } })
                 }
+                pos={draft.imagePos?.[`client.${i}`]}
+                onPosChange={(p) => setPos(`client.${i}`, p)}
                 testId={`admin-client-img-${i}`}
               />
             </div>
@@ -387,11 +409,49 @@ export default function Admin() {
           </div>
         </Section>
 
+        <Section title="Results gallery cards (5)">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {(draft.results ?? []).map((r, i) => (
+              <div key={i} className="space-y-3 rounded-2xl border border-[#E7E2D8] p-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <Txt
+                    label="Views"
+                    value={r.views}
+                    onChange={(v) =>
+                      setDraft((d) => d && { ...d, results: (d.results ?? []).map((x, j) => (j === i ? { ...x, views: v } : x)) })
+                    }
+                    testId={`admin-result-views-${i}`}
+                  />
+                  <Txt
+                    label="Likes"
+                    value={r.likes}
+                    onChange={(v) =>
+                      setDraft((d) => d && { ...d, results: (d.results ?? []).map((x, j) => (j === i ? { ...x, likes: v } : x)) })
+                    }
+                  />
+                </div>
+                <ImgField
+                  label="Reel thumbnail"
+                  value={draft.resultImages?.[String(i)] ?? RESULTS[i].image}
+                  onChange={(u) =>
+                    setDraft((d) => d && { ...d, resultImages: { ...(d.resultImages ?? {}), [String(i)]: u } })
+                  }
+                  pos={draft.imagePos?.[`results.${i}`]}
+                  onPosChange={(p) => setPos(`results.${i}`, p)}
+                  testId={`admin-result-img-${i}`}
+                />
+              </div>
+            ))}
+          </div>
+        </Section>
+
         <Section title="Art break banner">
           <ImgField
             label="Banner artwork"
             value={draft.artImage ?? DEFAULT_ART}
             onChange={(u) => setDraft((d) => d && { ...d, artImage: u })}
+            pos={draft.imagePos?.["art"]}
+            onPosChange={(p) => setPos("art", p)}
             testId="admin-art"
           />
         </Section>
@@ -424,6 +484,8 @@ export default function Admin() {
                 onChange={(u) =>
                   setDraft((d) => d && { ...d, serviceImages: { ...(d.serviceImages ?? {}), [String(i)]: u } })
                 }
+                pos={draft.imagePos?.[`service.${i}`]}
+                onPosChange={(p) => setPos(`service.${i}`, p)}
                 testId={`admin-service-img-${i}`}
               />
             </div>

@@ -24,7 +24,7 @@ export default function ArtBreak() {
       <motion.img
         src={art}
         alt="NOCAP creator collage"
-        style={{ x, scale: 1.12 }}
+        style={{ x, scale: 1.12, objectPosition: content.imagePos?.["art"] }}
         className="h-[46vh] w-full object-cover sm:h-[60vh]"
         data-testid="art-break-image"
       />

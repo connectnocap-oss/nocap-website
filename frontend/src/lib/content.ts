@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { apiGet } from "@/lib/api";
-import { CLIENT_RESULTS, SERVICES, STORY_STATS, TEXTS, type ClientResult, type Service } from "@/lib/data";
+import { CLIENT_RESULTS, RESULTS, SERVICES, STORY_STATS, TEXTS, type ClientResult, type ResultCard, type Service } from "@/lib/data";
 
 export interface BrandLogoEntry {
   name: string;
@@ -20,14 +20,22 @@ export interface ServiceContent {
   tags: string[];
 }
 
+export interface ResultContent {
+  views: string;
+  likes: string;
+}
+
 export interface SiteContent {
   texts?: Record<string, string>;
   heroImages?: Record<string, string>;
   clientImages?: Record<string, string>;
   serviceImages?: Record<string, string>;
+  resultImages?: Record<string, string>;
+  imagePos?: Record<string, string>;
   brandLogos?: BrandLogoEntry[];
   clients?: ClientContent[];
   services?: ServiceContent[];
+  results?: ResultContent[];
   storyStats?: [string, string][];
   artImage?: string;
 }
@@ -77,6 +85,9 @@ export const mergeServices = (s?: ServiceContent[]): Service[] =>
   SERVICES.map((d, i) => ({ ...d, ...(s?.[i] ?? {}) }));
 
 export const mergeStoryStats = (s?: [string, string][]): [string, string][] => s ?? STORY_STATS;
+
+export const mergeResults = (r?: ResultContent[]): ResultCard[] =>
+  RESULTS.map((d, i) => ({ ...d, ...(r?.[i] ?? {}) }));
 
 export const ContentContext = createContext<{
   content: SiteContent;

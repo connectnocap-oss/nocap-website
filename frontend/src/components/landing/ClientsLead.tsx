@@ -91,6 +91,7 @@ export default function ClientsLead() {
                     src={imgSrc}
                     alt={c.client}
                     loading="lazy"
+                    style={{ objectPosition: content.imagePos?.[`client.${i}`] }}
                     className="aspect-square w-full rounded-2xl object-cover"
                   />
                   {editMode && (
