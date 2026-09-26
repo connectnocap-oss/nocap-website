@@ -1,11 +1,12 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, LoaderCircle } from "lucide-react";
-import { SiInstagram, SiYoutube, SiX } from "@icons-pack/react-simple-icons";
+import { ArrowRight, LoaderCircle, Mail } from "lucide-react";
+import { SiInstagram } from "@icons-pack/react-simple-icons";
 import { toast } from "sonner";
 import { apiPost } from "@/lib/api";
 import type { Enquiry } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
+import { useText } from "@/lib/content";
 import LogoMark from "./LogoMark";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +15,7 @@ import { Label } from "@/components/ui/label";
 const EMPTY = { name: "", email: "", brand: "", message: "" };
 
 export default function Footer() {
+  const t = useText();
   const [form, setForm] = useState(EMPTY);
   const [sending, setSending] = useState(false);
 
@@ -35,7 +37,7 @@ export default function Footer() {
     setForm((f) => ({ ...f, [key]: e.target.value }));
 
   return (
-    <footer id="contact" className="mt-12 rounded-t-[2.5rem] bg-[#0D0F0E] text-[#FBF8F2]" data-testid="footer-section">
+    <footer id="contact" className="mt-4 rounded-t-[2.5rem] bg-[#0D0F0E] text-[#FBF8F2]" data-testid="footer-section">
       <div className="mx-auto max-w-[1600px] px-6 pt-24 sm:px-10">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
@@ -46,7 +48,7 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               className="mb-5 font-mono text-xs tracking-[0.25em] text-[#C6F24E] uppercase"
             >
-              Contact
+              {t("footer.eyebrow")}
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 28 }}
@@ -55,9 +57,9 @@ export default function Footer() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-heading text-5xl leading-[0.95] font-bold tracking-tight uppercase sm:text-7xl"
             >
-              Pull up,
+              {t("footer.h1")}
               <br />
-              <span className="font-serif font-normal normal-case italic text-[#C6F24E]">if you're serious.</span>
+              <span className="font-serif font-normal normal-case italic text-[#C6F24E]">{t("footer.accent")}</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -66,8 +68,7 @@ export default function Footer() {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="mt-6 max-w-md text-sm leading-relaxed text-[#A1A1AA] sm:text-base"
             >
-              We don't do maybes, and we definitely don't do free advice for people who aren't going to
-              listen. One call. You'll know by the end of it.
+              {t("footer.body")}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -81,7 +82,7 @@ export default function Footer() {
                 className="group flex cursor-pointer items-center gap-2.5 rounded-full bg-[#C6F24E] px-7 py-3.5 font-mono text-xs font-semibold tracking-[0.18em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.03]"
                 data-testid="footer-lets-talk-button"
               >
-                Let's talk
+                {t("footer.ctaPrimary")}
                 <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
               </button>
               <button
@@ -89,36 +90,38 @@ export default function Footer() {
                 className="cursor-pointer rounded-full border border-white/20 px-7 py-3.5 font-mono text-xs tracking-[0.18em] text-[#A1A1AA] uppercase transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
                 data-testid="footer-or-dont-button"
               >
-                Or don't. Your loss.
+                {t("footer.ctaSecondary")}
               </button>
             </motion.div>
             <div className="mt-10 space-y-2 font-mono text-xs tracking-[0.15em] text-[#A1A1AA] uppercase">
               <a
-                href="mailto:Connect.nocap@gmail.com"
+                href={`mailto:${t("footer.email")}`}
                 className="block transition-colors duration-300 hover:text-[#C6F24E]"
                 data-testid="footer-email"
               >
-                Connect.nocap@gmail.com
+                {t("footer.email")}
               </a>
-              <p>Mumbai · Bengaluru · Delhi · Dubai</p>
+              <p>{t("footer.hubs")}</p>
             </div>
             <div className="mt-8 flex gap-3">
-              {[
-                { icon: SiInstagram, label: "Instagram", id: "instagram" },
-                { icon: SiYoutube, label: "YouTube", id: "youtube" },
-                { icon: SiX, label: "X", id: "x" },
-              ].map(({ icon: Icon, label, id }) => (
-                <a
-                  key={id}
-                  href="#contact"
-                  aria-label={label}
-                  onClick={(e) => e.preventDefault()}
-                  className="rounded-full border border-white/15 p-3 text-[#A1A1AA] transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
-                  data-testid={`footer-social-${id}`}
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
+              <a
+                href={t("social.instagram")}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="rounded-full border border-white/15 p-3 text-[#A1A1AA] transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
+                data-testid="footer-social-instagram"
+              >
+                <SiInstagram size={16} />
+              </a>
+              <a
+                href={`mailto:${t("footer.email")}`}
+                aria-label="Email"
+                className="rounded-full border border-white/15 p-3 text-[#A1A1AA] transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
+                data-testid="footer-social-email"
+              >
+                <Mail size={16} />
+              </a>
             </div>
           </div>
 
@@ -195,10 +198,10 @@ export default function Footer() {
           </motion.form>
         </div>
 
-        <div className="mt-24 overflow-hidden">
+        <div className="mt-16 overflow-hidden">
           <button
             onClick={() => scrollToSection("#top")}
-            className="block w-full cursor-pointer"
+            className="mx-auto block w-full max-w-sm cursor-pointer"
             aria-label="Back to top"
             data-testid="footer-wordmark"
           >
@@ -207,7 +210,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 font-mono text-[11px] tracking-[0.15em] text-[#A1A1AA] uppercase sm:flex-row">
-          <p>© 2026 NOCAP — All noise, no cap.</p>
+          <p>{t("footer.copyright")}</p>
           <div className="flex gap-6">
             {["Work", "Numbers", "Expertise"].map((label) => (
               <button

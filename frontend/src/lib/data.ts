@@ -35,20 +35,20 @@ export interface Brand {
 }
 
 export const DEFAULT_BRANDS: Brand[] = [
-  { name: "CONAN BEER", className: "font-heading font-black tracking-tighter text-lg" },
-  { name: "TAJ", className: "font-serif tracking-[0.45em] text-lg" },
-  { name: "WESTIN", className: "font-sans font-medium tracking-[0.35em] text-base" },
-  { name: "tinder", className: "font-heading font-bold lowercase text-xl" },
-  { name: "SIMBA", className: "font-heading font-black italic tracking-tight text-lg" },
-  { name: "STOLI", className: "font-mono font-bold tracking-[0.4em] text-base" },
-  { name: "NICOBAR GIN", className: "font-sans tracking-[0.3em] text-xs" },
-  { name: "Tito's Handmade", className: "font-serif italic text-xl" },
-  { name: "GREATER THAN", className: "font-heading font-semibold tracking-[0.3em] text-sm" },
-  { name: "KATI PATANG", className: "font-sans font-bold tracking-[0.2em] text-sm" },
-  { name: "CASA CLARO", className: "font-serif tracking-[0.25em] text-base" },
-  { name: "PISTOLA", className: "font-heading font-black tracking-tight text-lg" },
-  { name: "CATWALK", className: "font-sans font-light tracking-[0.45em] text-sm" },
-  { name: "MONKEY SHOULDER", className: "font-serif italic font-bold text-base" },
+  { name: "CONAN BEER", className: "font-heading font-black tracking-tighter text-2xl" },
+  { name: "TAJ", className: "font-serif tracking-[0.45em] text-2xl" },
+  { name: "WESTIN", className: "font-sans font-medium tracking-[0.35em] text-xl" },
+  { name: "tinder", className: "font-heading font-bold lowercase text-3xl" },
+  { name: "SIMBA", className: "font-heading font-black italic tracking-tight text-2xl" },
+  { name: "STOLI", className: "font-mono font-bold tracking-[0.4em] text-xl" },
+  { name: "NICOBAR GIN", className: "font-sans tracking-[0.3em] text-base" },
+  { name: "Tito's Handmade", className: "font-serif italic text-3xl" },
+  { name: "GREATER THAN", className: "font-heading font-semibold tracking-[0.3em] text-lg" },
+  { name: "KATI PATANG", className: "font-sans font-bold tracking-[0.2em] text-lg" },
+  { name: "CASA CLARO", className: "font-serif tracking-[0.25em] text-xl" },
+  { name: "PISTOLA", className: "font-heading font-black tracking-tight text-2xl" },
+  { name: "CATWALK", className: "font-sans font-light tracking-[0.45em] text-lg" },
+  { name: "MONKEY SHOULDER", className: "font-serif italic font-bold text-xl" },
 ];
 
 export interface ClientResult {
@@ -173,6 +173,51 @@ export const SERVICES: Service[] = [
     image: `${IMG}/2f86f25cbfa43cee66213b3a7cf3e42eac075ade54ca0c2fe9720917b3f9b60f.jpeg`,
   },
 ];
+
+export const DEFAULT_ART =
+  "https://static.prod-images.emergentagent.com/jobs/a95990dc-61d9-443d-b7e0-2e5cd2382ef4/images/673ea68c7d4fa0aedb7650bb641e1bfd5d9d776c99cdb9f2efcf625fb5fb0798.jpeg";
+
+export const TEXTS: Record<string, string> = {
+  "nav.cta": "Pull Up",
+  "hero.line1": "YOU DIDN'T FIND US.",
+  "hero.line2": "WE LET YOU.",
+  "hero.line3": "Everyone else is trying. We're just better.",
+  "hero.sub": "Strategy. Deals. Attention. Because that's just what happens when we're involved.",
+  "hero.cta": "Pull Up",
+  "marquee.words": "Social Media, Influencer Marketing, Brand Deals, Content, Strategy, NOCAP, Growth",
+  "logos.heading": "Some brands we've had fun with.",
+  "clients.h1": "Our clients",
+  "clients.h2": "get paid",
+  "clients.accent": "first.",
+  "clients.body": "Case studies from the brands we've grown — each one engineered to turn content into contracts.",
+  "clients.cta": "See the receipts",
+  "process.eyebrow": "Our social media process",
+  "process.h1": "From audit",
+  "process.accent": "to reporting.",
+  "process.week1": "We look at your numbers. I'm gonna be honest, they're not good.",
+  "process.week2": "Doesn't matter. We already fixed it.",
+  "process.week3": "The brands start calling you instead of the other way around.",
+  "process.week4": "You're thanking us. We're already onto the next thing.",
+  "work.eyebrow": "The work speaks.",
+  "work.h1": "Numbers mean more when they",
+  "work.accent": "pay rent.",
+  "work.body": "Here's what happens when strategy actually closes.",
+  "work.cta": "Not just vanity metrics",
+  "art.caption": "Made by creators. Run by NOCAP.",
+  "expertise.h1": "Our",
+  "expertise.accent": "expertise",
+  "expertise.sub": "Three services. Seven disciplines underneath them. One team. Tap a panel to see what we actually do — social media management, influencer marketing, and brand sponsorship, broken down.",
+  "footer.eyebrow": "Contact",
+  "footer.h1": "Pull up,",
+  "footer.accent": "if you're serious.",
+  "footer.body": "We don't do maybes, and we definitely don't do free advice for people who aren't going to listen. One call. You'll know by the end of it.",
+  "footer.ctaPrimary": "Let's talk",
+  "footer.ctaSecondary": "Or don't. Your loss.",
+  "footer.email": "Connect.nocap@gmail.com",
+  "footer.hubs": "Mumbai · Bengaluru · Delhi · Dubai",
+  "footer.copyright": "© 2026 NOCAP — All noise, no cap.",
+  "social.instagram": "https://instagram.com/connect.nocap",
+};
 
 export interface Enquiry {
   id: string;

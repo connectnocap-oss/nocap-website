@@ -1,31 +1,23 @@
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
-import { CLIENT_RESULTS } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
-import { saveContent, useSiteContent } from "@/lib/content";
+import { mergeClients, saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
 
 export default function ClientsLead() {
-  const { content, refresh } = useSiteContent();
+  const { content, refresh, editMode } = useSiteContent();
+  const t = useText();
+  const clients = mergeClients(content.clients);
 
-  const saveImage = async (client: string, url: string) => {
-    await saveContent({ ...content, clientImages: { ...(content.clientImages ?? {}), [client]: url } });
+  const saveImage = async (i: number, url: string) => {
+    await saveContent({ ...content, clientImages: { ...(content.clientImages ?? {}), [String(i)]: url } });
     refresh();
   };
 
   return (
-    <section id="work" className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10" data-testid="clients-lead-section">
+    <section id="work" className="mx-auto max-w-[1600px] px-6 pt-10 pb-16 sm:px-10" data-testid="clients-lead-section">
       <div className="grid gap-14 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
         <div className="self-start lg:sticky lg:top-28">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6 }}
-            className="mb-5 font-mono text-xs tracking-[0.25em] text-[#143D2B] uppercase"
-          >
-            Selected outcomes
-          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -33,9 +25,9 @@ export default function ClientsLead() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="font-heading text-4xl leading-[0.95] font-bold tracking-tight uppercase sm:text-6xl"
           >
-            Our clients
+            {t("clients.h1")}
             <br />
-            get paid <span className="font-serif font-normal normal-case italic text-[#143D2B]">first.</span>
+            {t("clients.h2")} <span className="font-serif font-normal normal-case italic text-[#143D2B]">{t("clients.accent")}</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +36,7 @@ export default function ClientsLead() {
             transition={{ delay: 0.15, duration: 0.7 }}
             className="mt-6 max-w-md text-sm leading-relaxed text-[#57534E] sm:text-base"
           >
-            Case studies from the brands we've grown — each one engineered to turn content into contracts.
+            {t("clients.body")}
           </motion.p>
           <motion.button
             initial={{ opacity: 0, y: 16 }}
@@ -55,16 +47,16 @@ export default function ClientsLead() {
             className="mt-8 flex cursor-pointer items-center gap-2 rounded-full bg-[#C6F24E] px-6 py-3 font-mono text-xs font-semibold tracking-[0.15em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.03]"
             data-testid="clients-cta-button"
           >
-            See the receipts <Plus size={14} />
+            {t("clients.cta")} <Plus size={14} />
           </motion.button>
         </div>
 
         <div className="space-y-6">
-          {CLIENT_RESULTS.map((c, i) => {
-            const imgSrc = content.clientImages?.[c.client] ?? c.image;
+          {clients.map((c, i) => {
+            const imgSrc = content.clientImages?.[String(i)] ?? c.image;
             return (
               <motion.article
-                key={c.client}
+                key={i}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
@@ -84,12 +76,12 @@ export default function ClientsLead() {
                     ))}
                   </div>
                   <div className="mt-5 flex flex-wrap gap-2 border-t border-dashed border-[#121212]/20 pt-5">
-                    {c.tags.map((t) => (
+                    {c.tags.map((tag) => (
                       <span
-                        key={t}
+                        key={tag}
                         className="rounded-full border border-[#121212]/25 px-3.5 py-1.5 text-xs text-[#121212] transition-colors duration-300 group-hover:border-[#143D2B]/50"
                       >
-                        {t}
+                        {tag}
                       </span>
                     ))}
                   </div>
@@ -101,14 +93,16 @@ export default function ClientsLead() {
                     loading="lazy"
                     className="aspect-square w-full rounded-2xl object-cover"
                   />
-                  <div className="absolute right-2 bottom-2">
-                    <ImageEditDialog
-                      title={`${c.client} — card photo`}
-                      current={imgSrc}
-                      testId={`client-${i}-photo`}
-                      onSaved={(url) => saveImage(c.client, url)}
-                    />
-                  </div>
+                  {editMode && (
+                    <div className="absolute right-2 bottom-2">
+                      <ImageEditDialog
+                        title={`${c.client} — card photo`}
+                        current={imgSrc}
+                        testId={`client-${i}-photo`}
+                        onSaved={(url) => saveImage(i, url)}
+                      />
+                    </div>
+                  )}
                 </div>
               </motion.article>
             );

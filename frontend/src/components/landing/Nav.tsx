@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
+import { Lock } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
+import { useText } from "@/lib/content";
 import LogoMark from "./LogoMark";
 
 const LINKS: [string, string, string][] = [
@@ -8,6 +11,7 @@ const LINKS: [string, string, string][] = [
 ];
 
 export default function Nav() {
+  const t = useText();
   return (
     <header
       className="fixed inset-x-0 top-0 z-40 border-b border-black/10 bg-[#FBF8F2]/90 backdrop-blur-md"
@@ -34,13 +38,23 @@ export default function Nav() {
             </button>
           ))}
         </div>
-        <button
-          onClick={() => scrollToSection("#contact")}
-          className="cursor-pointer rounded-full bg-[#C6F24E] px-6 py-2.5 font-mono text-xs font-semibold tracking-[0.18em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.04]"
-          data-testid="nav-cta-button"
-        >
-          Pull Up
-        </button>
+        <div className="flex items-center gap-1.5">
+          <Link
+            to="/admin"
+            aria-label="Owner admin panel"
+            className="rounded-full p-2 text-[#121212]/40 transition-colors duration-300 hover:text-[#121212]"
+            data-testid="nav-admin-link"
+          >
+            <Lock size={15} />
+          </Link>
+          <button
+            onClick={() => scrollToSection("#contact")}
+            className="cursor-pointer rounded-full bg-[#C6F24E] px-6 py-2.5 font-mono text-xs font-semibold tracking-[0.18em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.04]"
+            data-testid="nav-cta-button"
+          >
+            {t("nav.cta")}
+          </button>
+        </div>
       </nav>
     </header>
   );

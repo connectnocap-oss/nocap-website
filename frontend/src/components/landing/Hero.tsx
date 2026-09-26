@@ -4,14 +4,14 @@ import { ArrowRight, ChevronLeft, ChevronRight, Images, LoaderCircle } from "luc
 import { toast } from "sonner";
 import { HERO_SLIDES, type Slide } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
-import { saveContent, uploadImage, useSiteContent } from "@/lib/content";
+import { saveContent, uploadImage, useSiteContent, useText } from "@/lib/content";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 const HOOK_LINES = [
-  { text: "YOU DIDN'T FIND US.", serif: false },
-  { text: "WE LET YOU.", serif: false },
-  { text: "Everyone else is trying. We're just better.", serif: true },
+  { key: "hero.line1", serif: false },
+  { key: "hero.line2", serif: false },
+  { key: "hero.line3", serif: true },
 ];
 
 function HeroPhotoEditor({ slides }: { slides: Slide[] }) {
@@ -103,7 +103,8 @@ function HeroPhotoEditor({ slides }: { slides: Slide[] }) {
 }
 
 export default function Hero() {
-  const { content } = useSiteContent();
+  const { content, editMode } = useSiteContent();
+  const t = useText();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -146,28 +147,11 @@ export default function Hero() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-black/20" />
 
-        <div className="absolute top-5 left-5 flex items-center gap-3 sm:top-7 sm:left-7">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.5 }}
-              className="rounded-full border border-white/25 bg-white/10 px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-white uppercase backdrop-blur-md"
-              data-testid="hero-slide-tag"
-            >
-              {slide.tag}
-            </motion.div>
-          </AnimatePresence>
-          <span className="font-mono text-[11px] tracking-[0.2em] text-white/70">
-            0{index + 1} / 0{slides.length}
-          </span>
-        </div>
-
-        <div className="absolute top-5 right-5 sm:top-7 sm:right-7">
-          <HeroPhotoEditor slides={slides} />
-        </div>
+        {editMode && (
+          <div className="absolute top-5 right-5 sm:top-7 sm:right-7">
+            <HeroPhotoEditor slides={slides} />
+          </div>
+        )}
 
         <div className="absolute right-5 bottom-5 flex items-center gap-2 sm:right-7 sm:bottom-7">
           {slides.map((_, i) => (
@@ -200,14 +184,14 @@ export default function Hero() {
         <div className="absolute bottom-5 left-5 max-w-xl rounded-3xl bg-[#FBF8F2] p-7 shadow-[0_24px_60px_rgba(0,0,0,0.25)] sm:bottom-7 sm:left-7 sm:p-9">
           <h1 className="font-heading text-3xl leading-[1.02] font-bold tracking-tight text-[#121212] sm:text-5xl">
             {HOOK_LINES.map((line, i) => (
-              <span key={line.text} className="block overflow-hidden pb-1">
+              <span key={line.key} className="block overflow-hidden pb-1">
                 <motion.span
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.35 + i * 0.16, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                   className={`block ${line.serif ? "font-serif text-2xl font-normal italic text-[#143D2B] sm:text-4xl" : ""}`}
                 >
-                  {line.text}
+                  {t(line.key)}
                 </motion.span>
               </span>
             ))}
@@ -218,7 +202,7 @@ export default function Hero() {
             transition={{ delay: 1.05, duration: 0.8 }}
             className="mt-4 text-sm leading-relaxed text-[#57534E] sm:text-base"
           >
-            Strategy. Deals. Attention. Because that's just what happens when we're involved.
+            {t("hero.sub")}
           </motion.p>
           <motion.button
             initial={{ opacity: 0, y: 12 }}
@@ -228,7 +212,7 @@ export default function Hero() {
             className="group mt-6 flex cursor-pointer items-center gap-3 rounded-full bg-[#143D2B] px-7 py-3.5 font-mono text-xs tracking-[0.18em] text-[#FBF8F2] uppercase transition-colors duration-300 hover:bg-[#0F2E20]"
             data-testid="hero-cta-button"
           >
-            Pull Up
+            {t("hero.cta")}
             <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
           </motion.button>
         </div>

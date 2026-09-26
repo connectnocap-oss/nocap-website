@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { ImagePlus, LoaderCircle, Pencil, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { DEFAULT_BRANDS, type Brand } from "@/lib/data";
-import { saveContent, uploadImage, useSiteContent, type BrandLogoEntry } from "@/lib/content";
+import { saveContent, uploadImage, useSiteContent, useText, type BrandLogoEntry } from "@/lib/content";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +16,8 @@ interface DraftSlot {
 }
 
 export default function LogoWall() {
-  const { content, refresh } = useSiteContent();
+  const { content, refresh, editMode } = useSiteContent();
+  const t = useText();
   const brands: (Brand & { image?: string })[] = DEFAULT_BRANDS.map((b, i) => {
     const override = content.brandLogos?.[i];
     return { ...b, name: override?.name || b.name, image: override?.image };
@@ -47,7 +48,7 @@ export default function LogoWall() {
       setOpen(false);
       toast.success("Logo wall updated.");
     } catch {
-      toast.error("Couldn't save. Try smaller images.");
+      toast.error("Couldn't save. Log in via /admin first.");
     } finally {
       setSaving(false);
     }
@@ -65,7 +66,7 @@ export default function LogoWall() {
   };
 
   return (
-    <section className="mx-auto max-w-[1600px] px-6 py-20 sm:px-10" data-testid="brand-logo-wall">
+    <section className="mx-auto max-w-[1600px] px-6 pt-16 pb-10 sm:px-10" data-testid="brand-logo-wall">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -74,18 +75,20 @@ export default function LogoWall() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="font-mono text-xs tracking-[0.25em] text-[#57534E] uppercase"
         >
-          Some brands we've had fun with.
+          {t("logos.heading")}
         </motion.p>
-        <button
-          onClick={openEditor}
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-[#143D2B]/25 px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-[#143D2B] uppercase transition-colors duration-300 hover:bg-[#143D2B] hover:text-[#FBF8F2]"
-          data-testid="logo-wall-edit-button"
-        >
-          <Pencil size={12} /> Replace logos
-        </button>
+        {editMode && (
+          <button
+            onClick={openEditor}
+            className="flex cursor-pointer items-center gap-2 rounded-full border border-[#143D2B]/25 px-4 py-2 font-mono text-[11px] tracking-[0.15em] text-[#143D2B] uppercase transition-colors duration-300 hover:bg-[#143D2B] hover:text-[#FBF8F2]"
+            data-testid="logo-wall-edit-button"
+          >
+            <Pencil size={12} /> Replace logos
+          </button>
+        )}
       </div>
 
-      <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
         {brands.map((brand, i) => (
           <motion.div
             key={i}
@@ -93,11 +96,11 @@ export default function LogoWall() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ delay: (i % 7) * 0.06, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-12 items-center justify-center text-center text-[#121212] opacity-80 transition-opacity duration-300 hover:opacity-100"
+            className="flex min-h-16 items-center justify-center text-center text-[#121212] opacity-80 transition-opacity duration-300 hover:opacity-100"
             data-testid={`brand-slot-${i}`}
           >
             {brand.image ? (
-              <img src={brand.image} alt={brand.name} className="max-h-10 w-auto max-w-full object-contain" />
+              <img src={brand.image} alt={brand.name} className="max-h-16 w-auto max-w-full object-contain" />
             ) : (
               <span className={brand.className}>{brand.name}</span>
             )}
@@ -119,11 +122,11 @@ export default function LogoWall() {
                 <Label htmlFor={`logo-${i}`} className="font-mono text-[10px] tracking-[0.15em] uppercase">
                   Slot {String(i + 1).padStart(2, "0")}
                 </Label>
-                <div className="flex h-10 items-center justify-center rounded-lg bg-[#F3EFE6] px-2">
+                <div className="flex h-12 items-center justify-center rounded-lg bg-[#F3EFE6] px-2">
                   {slot.file ? (
-                    <img src={URL.createObjectURL(slot.file)} alt="New logo" className="max-h-8 object-contain" />
+                    <img src={URL.createObjectURL(slot.file)} alt="New logo" className="max-h-10 object-contain" />
                   ) : slot.image ? (
-                    <img src={slot.image} alt={slot.name} className="max-h-8 object-contain" />
+                    <img src={slot.image} alt={slot.name} className="max-h-10 object-contain" />
                   ) : (
                     <span className="max-w-full truncate text-xs text-[#57534E]">{slot.name}</span>
                   )}

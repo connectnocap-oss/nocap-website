@@ -30,6 +30,12 @@ Build a landing page for "nocap" matching 5 reference screenshots: (1) hero phot
 - New Sellio-style header bar: Home / Our Work / Services + lime "PULL UP" CTA
 - New copy throughout: hero ("You didn't find us. We let you."), dark marquee ticker, "Our clients get paid first." (PRFCTSOUND, Kibba Superior, District 9), "Our Social Media Process" 4-week block, "The Work Speaks" stats, 7 new expertise panels, "Pull up, if you're serious." footer with Connect.nocap@gmail.com
 
+## Implemented (2026-09-26, v3)
+- Owner admin panel at `/admin` (single password, JWT 7-day token, 5-strike IP lockout): edit every text on the site, all 14 logo slots (name + image), 4 hero slides, 3 case cards (text + photo), 6 work-stats, 7 expertise panels (text + photo), art banner, footer/socials
+- Edit-mode gating: on-page Replace/upload chips render only when logged in; `PUT /api/content` and `POST /api/uploads` are Bearer-guarded (401 without token)
+- Enquiry email notifications to Connect.nocap@gmail.com via Emergent-managed Resend (verified 202 Accepted)
+- Collage art-break band (original AI-generated piece, parallax + spinning starburst SVGs); bigger logo wall; tightened section gaps; stats strip removed; hero slide titles removed; footer logo reduced; live Instagram + mail icons
+
 ## Backlog
 - P1: Admin view for enquiries (protected route or simple list page)
 - P1: Real social links + real contact email for NOCAP

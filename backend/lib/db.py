@@ -28,6 +28,8 @@ INDEXES: dict[str, list[IndexModel]] = {
         IndexModel([("storage_path", ASCENDING)], name="storage_path", unique=True),
     ],
     "content": [IndexModel([("id", ASCENDING)], name="id", unique=True)],
+    "users": [IndexModel([("email", ASCENDING)], name="email", unique=True)],
+    "login_attempts": [IndexModel([("identifier", ASCENDING)], name="identifier", unique=True)],
 }
 
 

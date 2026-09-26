@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { SERVICES } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
-import { saveContent, useSiteContent } from "@/lib/content";
+import { mergeServices, saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
 import { cn } from "@/lib/utils";
 
 export default function Expertise() {
   const [active, setActive] = useState(0);
-  const { content, refresh } = useSiteContent();
+  const { content, refresh, editMode } = useSiteContent();
+  const t = useText();
+  const services = mergeServices(content.services);
 
   const saveImage = async (i: number, url: string) => {
     await saveContent({ ...content, serviceImages: { ...(content.serviceImages ?? {}), [String(i)]: url } });
@@ -17,7 +18,7 @@ export default function Expertise() {
   };
 
   return (
-    <section id="expertise" className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10" data-testid="expertise-section">
+    <section id="expertise" className="mx-auto max-w-[1600px] px-6 pt-10 pb-20 sm:px-10" data-testid="expertise-section">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
@@ -26,29 +27,26 @@ export default function Expertise() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="font-heading text-4xl leading-[0.95] font-bold tracking-tight uppercase sm:text-6xl"
         >
-          Our <span className="font-serif font-normal normal-case italic text-[#143D2B]">expertise</span>
+          {t("expertise.h1")} <span className="font-serif font-normal normal-case italic text-[#143D2B]">{t("expertise.accent")}</span>
         </motion.h2>
-        <p className="max-w-sm text-sm leading-relaxed text-[#57534E]">
-          Three services. Seven disciplines underneath them. One team. Tap a panel to see what we
-          actually do — social media management, influencer marketing, and brand sponsorship, broken down.
-        </p>
+        <p className="max-w-sm text-sm leading-relaxed text-[#57534E]">{t("expertise.sub")}</p>
       </div>
 
       <div className="flex flex-col gap-3 lg:h-[580px] lg:flex-row">
-        {SERVICES.map((service, i) => {
+        {services.map((service, i) => {
           const isActive = i === active;
           const imgSrc = content.serviceImages?.[String(i)] ?? service.image;
           return (
             <div
-              key={service.title}
+              key={i}
               role="button"
               tabIndex={0}
               aria-expanded={isActive}
               onClick={() => setActive(i)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") setActive(i);
-                if (e.key === "ArrowRight") setActive((i + 1) % SERVICES.length);
-                if (e.key === "ArrowLeft") setActive((i - 1 + SERVICES.length) % SERVICES.length);
+                if (e.key === "ArrowRight") setActive((i + 1) % services.length);
+                if (e.key === "ArrowLeft") setActive((i - 1 + services.length) % services.length);
               }}
               className={cn(
                 "relative cursor-pointer overflow-hidden rounded-3xl outline-none transition-[flex-grow,background-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:ring-2 focus-visible:ring-[#143D2B]",
@@ -78,23 +76,25 @@ export default function Expertise() {
                       loading="lazy"
                       className="h-48 w-full rounded-2xl object-cover lg:h-56"
                     />
-                    <div className="absolute right-2 bottom-2">
-                      <ImageEditDialog
-                        title={`${service.title} — panel photo`}
-                        current={imgSrc}
-                        testId={`service-${i}-photo`}
-                        onSaved={(url) => saveImage(i, url)}
-                      />
-                    </div>
+                    {editMode && (
+                      <div className="absolute right-2 bottom-2">
+                        <ImageEditDialog
+                          title={`${service.title} — panel photo`}
+                          current={imgSrc}
+                          testId={`service-${i}-photo`}
+                          onSaved={(url) => saveImage(i, url)}
+                        />
+                      </div>
+                    )}
                   </div>
                   <h3 className="mt-5 font-heading text-2xl font-bold tracking-tight sm:text-3xl">
                     {service.title}
                   </h3>
                   <p className="mt-3 max-w-md text-sm leading-relaxed text-[#D6D3D1]">{service.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {service.tags.map((t) => (
-                      <span key={t} className="rounded-full border border-white/20 px-3 py-1 text-xs text-[#FAFAF9]">
-                        {t}
+                    {service.tags.map((tag) => (
+                      <span key={tag} className="rounded-full border border-white/20 px-3 py-1 text-xs text-[#FAFAF9]">
+                        {tag}
                       </span>
                     ))}
                   </div>
