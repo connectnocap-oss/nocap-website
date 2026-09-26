@@ -157,7 +157,7 @@ async def create_enquiry(input: EnquiryCreate):
     return enquiry
 
 @api_router.get("/enquiries", response_model=List[Enquiry])
-async def list_enquiries():
+async def list_enquiries(_: None = Depends(require_admin)):
     docs = await db.enquiries.find().sort("created_at", -1).to_list(500)
     return [Enquiry(**doc) for doc in docs]
 

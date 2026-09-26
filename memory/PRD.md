@@ -43,6 +43,10 @@ Build a landing page for "nocap" matching 5 reference screenshots: (1) hero phot
 - Image focus adjust: every admin image field has a 3×3 focus-dot picker (object-position) for hero slides, client cards, expertise panels, art banner, and result cards
 - Extra graphic accents: spinning starbursts on art break, results gallery, and footer eyebrow
 
+## Implemented (2026-09-26, v5)
+- Enquiry inbox in the admin panel: every footer brief listed newest-first with name, brand, mailto email, message, timestamp + refresh button; `GET /api/enquiries` is now owner-only (401 without token)
+- Custom domain itsnocap.com: deploy requested but BLOCKED — first deploy costs 50 ECUs/month and balance is 49 ECUs; awaiting user top-up, then re-dispatch deploy
+
 ## Backlog
 - P1: Admin view for enquiries (protected route or simple list page)
 - P1: Real social links + real contact email for NOCAP

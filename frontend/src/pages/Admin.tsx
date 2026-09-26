@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Eye, LoaderCircle, Lock, LogOut } from "lucide-react";
 import { apiPost } from "@/lib/api";
+import EnquiryInbox from "@/components/admin/EnquiryInbox";
 import {
   saveContent,
   setToken,
@@ -254,6 +255,8 @@ export default function Admin() {
           Edit anything below, upload images, adjust the focus dots to crop each picture, then hit{" "}
           <strong>Save all changes</strong> — the public site updates instantly.
         </p>
+
+        <EnquiryInbox />
 
         {TEXT_GROUPS.map((g) => (
           <Section key={g.title} title={g.title}>

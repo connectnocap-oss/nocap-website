@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { apiGet } from "@/lib/api";
-import { CLIENT_RESULTS, RESULTS, SERVICES, STORY_STATS, TEXTS, type ClientResult, type ResultCard, type Service } from "@/lib/data";
+import { CLIENT_RESULTS, RESULTS, SERVICES, STORY_STATS, TEXTS, type ClientResult, type Enquiry, type ResultCard, type Service } from "@/lib/data";
 
 export interface BrandLogoEntry {
   name: string;
@@ -66,6 +66,9 @@ async function authedFetch(path: string, init: RequestInit): Promise<Response> {
 
 export const fetchContent = async (): Promise<SiteContent> =>
   (await apiGet<{ data: SiteContent }>("/content")).data;
+
+export const fetchEnquiries = async (): Promise<Enquiry[]> =>
+  (await (await authedFetch("/enquiries", { method: "GET" })).json()) as Enquiry[];
 
 export const saveContent = async (data: SiteContent): Promise<void> => {
   await authedFetch("/content", { method: "PUT", body: JSON.stringify({ data }) });
