@@ -23,6 +23,11 @@ INDEXES: dict[str, list[IndexModel]] = {
         IndexModel([("id", ASCENDING)], name="id", unique=True),
         IndexModel([("created_at", DESCENDING)], name="created_at_desc"),
     ],
+    "files": [
+        IndexModel([("id", ASCENDING)], name="id", unique=True),
+        IndexModel([("storage_path", ASCENDING)], name="storage_path", unique=True),
+    ],
+    "content": [IndexModel([("id", ASCENDING)], name="id", unique=True)],
 }
 
 

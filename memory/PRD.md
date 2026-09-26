@@ -24,6 +24,12 @@ Build a landing page for "nocap" matching 5 reference screenshots: (1) hero phot
 - Logo wall replace dialog with localStorage persistence; verified in browser
 - Accordion, count-up stats, marquee, parallax hero — verified via screenshots
 
+## Implemented (2026-09-26)
+- Owner-managed imagery everywhere: hero slider (4 slots), 3 case study cards, 7 expertise panels, and the 14-slot logo wall all accept real image uploads from the browser — stored permanently via Emergent object storage (`POST /api/uploads`, `GET /api/files/*`) with overrides in the `content` Mongo doc (`GET/PUT /api/content`)
+- Real NOCAP logo (user-supplied PNG) used as a CSS-masked mark, recolored to forest green in nav and lime for the giant footer wordmark
+- New Sellio-style header bar: Home / Our Work / Services + lime "PULL UP" CTA
+- New copy throughout: hero ("You didn't find us. We let you."), dark marquee ticker, "Our clients get paid first." (PRFCTSOUND, Kibba Superior, District 9), "Our Social Media Process" 4-week block, "The Work Speaks" stats, 7 new expertise panels, "Pull up, if you're serious." footer with Connect.nocap@gmail.com
+
 ## Backlog
 - P1: Admin view for enquiries (protected route or simple list page)
 - P1: Real social links + real contact email for NOCAP

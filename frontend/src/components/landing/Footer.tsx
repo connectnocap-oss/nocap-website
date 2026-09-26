@@ -39,6 +39,15 @@ export default function Footer() {
       <div className="mx-auto max-w-[1600px] px-6 pt-24 sm:px-10">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="mb-5 font-mono text-xs tracking-[0.25em] text-[#C6F24E] uppercase"
+            >
+              Contact
+            </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -46,9 +55,9 @@ export default function Footer() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-heading text-5xl leading-[0.95] font-bold tracking-tight uppercase sm:text-7xl"
             >
-              Ready to be
+              Pull up,
               <br />
-              <span className="font-serif font-normal normal-case italic text-[#C6F24E]">remembered?</span>
+              <span className="font-serif font-normal normal-case italic text-[#C6F24E]">if you're serious.</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -57,10 +66,40 @@ export default function Footer() {
               transition={{ delay: 0.2, duration: 0.7 }}
               className="mt-6 max-w-md text-sm leading-relaxed text-[#A1A1AA] sm:text-base"
             >
-              Tell us what your brand is stuck on. We'll come back with a point of view, not a package.
+              We don't do maybes, and we definitely don't do free advice for people who aren't going to
+              listen. One call. You'll know by the end of it.
             </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: 0.3, duration: 0.7 }}
+              className="mt-8 flex flex-wrap gap-3"
+            >
+              <button
+                onClick={() => document.getElementById("contact-name")?.focus()}
+                className="group flex cursor-pointer items-center gap-2.5 rounded-full bg-[#C6F24E] px-7 py-3.5 font-mono text-xs font-semibold tracking-[0.18em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.03]"
+                data-testid="footer-lets-talk-button"
+              >
+                Let's talk
+                <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </button>
+              <button
+                onClick={() => scrollToSection("#top")}
+                className="cursor-pointer rounded-full border border-white/20 px-7 py-3.5 font-mono text-xs tracking-[0.18em] text-[#A1A1AA] uppercase transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
+                data-testid="footer-or-dont-button"
+              >
+                Or don't. Your loss.
+              </button>
+            </motion.div>
             <div className="mt-10 space-y-2 font-mono text-xs tracking-[0.15em] text-[#A1A1AA] uppercase">
-              <p data-testid="footer-email">hello@nocap.agency</p>
+              <a
+                href="mailto:Connect.nocap@gmail.com"
+                className="block transition-colors duration-300 hover:text-[#C6F24E]"
+                data-testid="footer-email"
+              >
+                Connect.nocap@gmail.com
+              </a>
               <p>Mumbai · Bengaluru · Delhi · Dubai</p>
             </div>
             <div className="mt-8 flex gap-3">
@@ -159,18 +198,16 @@ export default function Footer() {
         <div className="mt-24 overflow-hidden">
           <button
             onClick={() => scrollToSection("#top")}
-            className="block w-full cursor-pointer text-center"
+            className="block w-full cursor-pointer"
             aria-label="Back to top"
             data-testid="footer-wordmark"
           >
-            <span className="font-heading text-[22vw] leading-[0.85] font-black tracking-tighter text-[#FBF8F2] uppercase select-none lg:text-[19vw]">
-              N<span className="text-[#C6F24E]">Ø</span>CAP
-            </span>
+            <LogoMark color="#C6F24E" fill />
           </button>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 font-mono text-[11px] tracking-[0.15em] text-[#A1A1AA] uppercase sm:flex-row">
-          <p>© 2026 <LogoMark accent="#C6F24E" className="text-[11px]" /> — All noise, no cap.</p>
+          <p>© 2026 NOCAP — All noise, no cap.</p>
           <div className="flex gap-6">
             {["Work", "Numbers", "Expertise"].map((label) => (
               <button

@@ -1,15 +1,109 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { HERO_SLIDES } from "@/lib/data";
+import { ArrowRight, ChevronLeft, ChevronRight, Images, LoaderCircle } from "lucide-react";
+import { toast } from "sonner";
+import { HERO_SLIDES, type Slide } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
+import { saveContent, uploadImage, useSiteContent } from "@/lib/content";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const HOOK_LINES = [
-  { text: "EVERY BRAND IS POSTING.", serif: false },
-  { text: "Almost none are remembered.", serif: true },
+  { text: "YOU DIDN'T FIND US.", serif: false },
+  { text: "WE LET YOU.", serif: false },
+  { text: "Everyone else is trying. We're just better.", serif: true },
 ];
 
+function HeroPhotoEditor({ slides }: { slides: Slide[] }) {
+  const { content, refresh } = useSiteContent();
+  const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState<Record<number, File>>({});
+  const [saving, setSaving] = useState(false);
+  const inputs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      const uploaded: Record<string, string> = { ...(content.heroImages ?? {}) };
+      for (const [i, f] of Object.entries(pending)) {
+        uploaded[i] = await uploadImage(f);
+      }
+      await saveContent({ ...content, heroImages: uploaded });
+      refresh();
+      setPending({});
+      setOpen(false);
+      toast.success("Hero photos updated.");
+    } catch {
+      toast.error("Upload failed. Try smaller images.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 font-mono text-[10px] tracking-[0.15em] text-white uppercase backdrop-blur-md transition-colors duration-300 hover:bg-white/25"
+        data-testid="hero-edit-photos-button"
+      >
+        <Images size={12} /> Replace photos
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-lg" data-testid="hero-edit-dialog">
+          <DialogHeader>
+            <DialogTitle className="font-heading tracking-tight">Replace hero photos</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-[#57534E]">Four slots in the slider. Pick a new photo for any of them.</p>
+          <div className="grid max-h-[55vh] grid-cols-2 gap-4 overflow-y-auto pr-1">
+            {slides.map((s, i) => (
+              <div key={i} className="space-y-2">
+                <img
+                  src={pending[i] ? URL.createObjectURL(pending[i]) : s.src}
+                  alt={s.tag}
+                  className="h-24 w-full rounded-xl bg-[#F3EFE6] object-cover"
+                />
+                <input
+                  ref={(el) => {
+                    inputs.current[i] = el;
+                  }}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  data-testid={`hero-slide-input-${i}`}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) setPending((p) => ({ ...p, [i]: f }));
+                  }}
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={() => inputs.current[i]?.click()}
+                  data-testid={`hero-slide-choose-${i}`}
+                >
+                  {pending[i] ? "Photo selected" : `Slide ${i + 1}`}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button
+            onClick={save}
+            disabled={saving || Object.keys(pending).length === 0}
+            className="w-full"
+            data-testid="hero-edit-save-button"
+          >
+            {saving ? <LoaderCircle size={14} className="animate-spin" /> : null} Save photos
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
 export default function Hero() {
+  const { content } = useSiteContent();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -17,16 +111,18 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "16%"]);
 
+  const slides = HERO_SLIDES.map((s, i) => ({ ...s, src: content.heroImages?.[String(i)] ?? s.src }));
+
   useEffect(() => {
     if (paused) return;
-    const t = setInterval(() => setIndex((i) => (i + 1) % HERO_SLIDES.length), 5200);
+    const t = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5200);
     return () => clearInterval(t);
-  }, [paused]);
+  }, [paused, slides.length]);
 
-  const slide = HERO_SLIDES[index];
+  const slide = slides[index];
 
   return (
-    <section id="top" className="px-3 pt-24 sm:px-6" data-testid="hero-section">
+    <section id="top" className="px-3 pt-20 sm:px-6" data-testid="hero-section">
       <div
         ref={ref}
         className="relative mx-auto h-[86vh] min-h-[560px] max-w-[1600px] overflow-hidden rounded-3xl"
@@ -65,12 +161,16 @@ export default function Hero() {
             </motion.div>
           </AnimatePresence>
           <span className="font-mono text-[11px] tracking-[0.2em] text-white/70">
-            0{index + 1} / 0{HERO_SLIDES.length}
+            0{index + 1} / 0{slides.length}
           </span>
         </div>
 
+        <div className="absolute top-5 right-5 sm:top-7 sm:right-7">
+          <HeroPhotoEditor slides={slides} />
+        </div>
+
         <div className="absolute right-5 bottom-5 flex items-center gap-2 sm:right-7 sm:bottom-7">
-          {HERO_SLIDES.map((_, i) => (
+          {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
@@ -80,7 +180,7 @@ export default function Hero() {
             />
           ))}
           <button
-            onClick={() => setIndex((index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
+            onClick={() => setIndex((index - 1 + slides.length) % slides.length)}
             aria-label="Previous slide"
             className="ml-3 cursor-pointer rounded-full border border-white/25 bg-white/10 p-2.5 text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/25"
             data-testid="hero-prev-button"
@@ -88,7 +188,7 @@ export default function Hero() {
             <ChevronLeft size={16} />
           </button>
           <button
-            onClick={() => setIndex((index + 1) % HERO_SLIDES.length)}
+            onClick={() => setIndex((index + 1) % slides.length)}
             aria-label="Next slide"
             className="cursor-pointer rounded-full border border-white/25 bg-white/10 p-2.5 text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/25"
             data-testid="hero-next-button"
@@ -105,7 +205,7 @@ export default function Hero() {
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ delay: 0.35 + i * 0.16, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                  className={`block ${line.serif ? "font-serif font-normal italic text-[#143D2B]" : ""}`}
+                  className={`block ${line.serif ? "font-serif text-2xl font-normal italic text-[#143D2B] sm:text-4xl" : ""}`}
                 >
                   {line.text}
                 </motion.span>
@@ -115,20 +215,20 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
+            transition={{ delay: 1.05, duration: 0.8 }}
             className="mt-4 text-sm leading-relaxed text-[#57534E] sm:text-base"
           >
-            Strategy. Culture. Content. Influence. Built around what your brand actually needs.
+            Strategy. Deals. Attention. Because that's just what happens when we're involved.
           </motion.p>
           <motion.button
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 1.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => scrollToSection("#contact")}
             className="group mt-6 flex cursor-pointer items-center gap-3 rounded-full bg-[#143D2B] px-7 py-3.5 font-mono text-xs tracking-[0.18em] text-[#FBF8F2] uppercase transition-colors duration-300 hover:bg-[#0F2E20]"
             data-testid="hero-cta-button"
           >
-            Start Something
+            Pull Up
             <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
           </motion.button>
         </div>

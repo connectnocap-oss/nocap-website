@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { SERVICES } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
+import { saveContent, useSiteContent } from "@/lib/content";
+import ImageEditDialog from "./ImageEditDialog";
 import { cn } from "@/lib/utils";
 
 export default function Expertise() {
   const [active, setActive] = useState(0);
+  const { content, refresh } = useSiteContent();
+
+  const saveImage = async (i: number, url: string) => {
+    await saveContent({ ...content, serviceImages: { ...(content.serviceImages ?? {}), [String(i)]: url } });
+    refresh();
+  };
 
   return (
     <section id="expertise" className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10" data-testid="expertise-section">
@@ -20,14 +28,16 @@ export default function Expertise() {
         >
           Our <span className="font-serif font-normal normal-case italic text-[#143D2B]">expertise</span>
         </motion.h2>
-        <p className="max-w-xs text-sm leading-relaxed text-[#57534E]">
-          Seven disciplines. One team. Tap a panel to see what we actually do.
+        <p className="max-w-sm text-sm leading-relaxed text-[#57534E]">
+          Three services. Seven disciplines underneath them. One team. Tap a panel to see what we
+          actually do — social media management, influencer marketing, and brand sponsorship, broken down.
         </p>
       </div>
 
       <div className="flex flex-col gap-3 lg:h-[580px] lg:flex-row">
         {SERVICES.map((service, i) => {
           const isActive = i === active;
+          const imgSrc = content.serviceImages?.[String(i)] ?? service.image;
           return (
             <div
               key={service.title}
@@ -61,12 +71,22 @@ export default function Expertise() {
                   transition={{ duration: 0.5, delay: 0.15 }}
                   className="px-5 pb-6"
                 >
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    loading="lazy"
-                    className="mt-4 h-48 w-full rounded-2xl object-cover lg:h-56"
-                  />
+                  <div className="relative mt-4">
+                    <img
+                      src={imgSrc}
+                      alt={service.title}
+                      loading="lazy"
+                      className="h-48 w-full rounded-2xl object-cover lg:h-56"
+                    />
+                    <div className="absolute right-2 bottom-2">
+                      <ImageEditDialog
+                        title={`${service.title} — panel photo`}
+                        current={imgSrc}
+                        testId={`service-${i}-photo`}
+                        onSaved={(url) => saveImage(i, url)}
+                      />
+                    </div>
+                  </div>
                   <h3 className="mt-5 font-heading text-2xl font-bold tracking-tight sm:text-3xl">
                     {service.title}
                   </h3>
@@ -106,7 +126,6 @@ export default function Expertise() {
           );
         })}
       </div>
-      <AnimatePresence>{null}</AnimatePresence>
     </section>
   );
 }

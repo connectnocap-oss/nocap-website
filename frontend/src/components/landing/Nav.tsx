@@ -1,34 +1,34 @@
 import { scrollToSection } from "@/lib/scroll";
 import LogoMark from "./LogoMark";
 
-const LINKS: [string, string][] = [
-  ["Work", "#work"],
-  ["Numbers", "#numbers"],
-  ["Expertise", "#expertise"],
+const LINKS: [string, string, string][] = [
+  ["Home", "#top", "home"],
+  ["Our Work", "#work", "our-work"],
+  ["Services", "#expertise", "services"],
 ];
 
 export default function Nav() {
   return (
-    <header className="fixed inset-x-0 top-0 z-40 px-3 sm:px-6">
-      <nav
-        className="mx-auto mt-3 flex max-w-7xl items-center justify-between rounded-full border border-black/10 bg-[#FBF8F2]/85 py-2.5 pr-2.5 pl-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)] backdrop-blur-md"
-        data-testid="main-nav"
-      >
+    <header
+      className="fixed inset-x-0 top-0 z-40 border-b border-black/10 bg-[#FBF8F2]/90 backdrop-blur-md"
+      data-testid="main-nav"
+    >
+      <nav className="relative mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 sm:px-8">
         <button
           onClick={() => scrollToSection("#top")}
           className="cursor-pointer"
           data-testid="nav-logo"
-          aria-label="Back to top"
+          aria-label="NOCAP home"
         >
-          <LogoMark />
+          <LogoMark height={26} />
         </button>
-        <div className="hidden items-center gap-8 md:flex">
-          {LINKS.map(([label, hash]) => (
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 md:flex">
+          {LINKS.map(([label, hash, id]) => (
             <button
               key={hash}
               onClick={() => scrollToSection(hash)}
-              className="cursor-pointer font-mono text-xs tracking-[0.18em] text-[#57534E] uppercase transition-colors duration-300 hover:text-[#121212]"
-              data-testid={`nav-link-${label.toLowerCase()}`}
+              className="cursor-pointer text-sm font-medium text-[#121212]/70 transition-colors duration-300 hover:text-[#121212]"
+              data-testid={`nav-link-${id}`}
             >
               {label}
             </button>
@@ -36,14 +36,10 @@ export default function Nav() {
         </div>
         <button
           onClick={() => scrollToSection("#contact")}
-          className="group flex cursor-pointer items-center gap-2.5 rounded-full bg-[#143D2B] py-2.5 pr-6 pl-4 font-mono text-xs tracking-[0.15em] text-[#FBF8F2] uppercase transition-colors duration-300 hover:bg-[#0F2E20]"
+          className="cursor-pointer rounded-full bg-[#C6F24E] px-6 py-2.5 font-mono text-xs font-semibold tracking-[0.18em] text-[#0F172A] uppercase transition-transform duration-300 hover:scale-[1.04]"
           data-testid="nav-cta-button"
         >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C6F24E] opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#C6F24E]" />
-          </span>
-          Start Something
+          Pull Up
         </button>
       </nav>
     </header>

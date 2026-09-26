@@ -24,7 +24,7 @@ export default function NumbersStory() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="font-serif text-4xl leading-[1.05] tracking-tight text-[#121212] sm:text-5xl"
           >
-            Numbers mean more when they <em className="text-[#143D2B]">tell a story.</em>
+            Numbers mean more when they <em className="text-[#143D2B]">pay rent.</em>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -33,7 +33,7 @@ export default function NumbersStory() {
             transition={{ delay: 0.2, duration: 0.7 }}
             className="mt-6 max-w-sm text-sm leading-relaxed text-[#57534E]"
           >
-            Here's what happens when the right idea meets the right execution.
+            Here's what happens when strategy actually closes.
           </motion.p>
           <motion.button
             initial={{ opacity: 0 }}
@@ -44,7 +44,7 @@ export default function NumbersStory() {
             className="mt-8 flex cursor-pointer items-center gap-2 font-mono text-xs tracking-[0.2em] text-[#143D2B] uppercase underline-offset-4 hover:underline"
             data-testid="numbers-story-cta"
           >
-            Not just numbers <ArrowUpRight size={14} />
+            Not just vanity metrics <ArrowUpRight size={14} />
           </motion.button>
         </div>
 

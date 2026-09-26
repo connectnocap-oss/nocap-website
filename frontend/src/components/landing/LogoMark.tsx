@@ -1,8 +1,35 @@
-export default function LogoMark({ accent = "#143D2B", className = "" }: { accent?: string; className?: string }) {
+const RATIO = "681 / 185";
+
+export default function LogoMark({
+  color = "#143D2B",
+  height = 22,
+  fill = false,
+  className = "",
+}: {
+  color?: string;
+  height?: number | string;
+  fill?: boolean;
+  className?: string;
+}) {
   return (
-    <span className={`font-heading text-xl font-black uppercase tracking-tighter ${className}`}>
-      N<span style={{ color: accent }}>Ø</span>CAP
-      <span className="align-super text-[0.5em] tracking-normal" style={{ color: accent }}>®</span>
-    </span>
+    <span
+      role="img"
+      aria-label="NOCAP"
+      className={className}
+      style={{
+        display: "inline-block",
+        ...(fill ? { width: "100%", height: "auto" } : { height, width: "auto" }),
+        aspectRatio: RATIO,
+        backgroundColor: color,
+        WebkitMaskImage: "url(/logo.png)",
+        maskImage: "url(/logo.png)",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
   );
 }
