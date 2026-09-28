@@ -52,7 +52,7 @@ export const setToken = (t: string | null) => {
 
 async function authedFetch(path: string, init: RequestInit): Promise<Response> {
   const isForm = init.body instanceof FormData;
-  const res = await fetch(`https://nocap-website-git-main-nocap2.vercel.app/api${path}`, {
+  const res = await fetch(`https://nocap-website-eta.vercel.app/api${path}`, {
     ...init,
     headers: {
       ...(isForm ? {} : { "Content-Type": "application/json" }),
