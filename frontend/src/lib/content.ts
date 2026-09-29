@@ -64,8 +64,30 @@ async function authedFetch(path: string, init: RequestInit): Promise<Response> {
   return res;
 }
 
+const VERCEL_API = "https://nocap-website-eta.vercel.app/api";
+
+const fixImageUrls = (value: unknown): unknown => {
+  if (typeof value === "string" && value.startsWith("/api/files/")) {
+    return `${VERCEL_API}${value}`;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(fixImageUrls);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, val]) => [key, fixImageUrls(val)])
+    );
+  }
+
+  return value;
+};
+
 export const fetchContent = async (): Promise<SiteContent> =>
-  (await apiGet<{ data: SiteContent }>("/content")).data;
+  fixImageUrls(
+    (await apiGet<{ data: SiteContent }>("/content")).data
+  ) as SiteContent;
 
 export const fetchEnquiries = async (): Promise<Enquiry[]> =>
   (await (await authedFetch("/enquiries", { method: "GET" })).json()) as Enquiry[];
