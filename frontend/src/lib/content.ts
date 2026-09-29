@@ -68,7 +68,7 @@ const VERCEL_API = "https://nocap-website-eta.vercel.app/api";
 
 const fixImageUrls = (value: unknown): unknown => {
   if (typeof value === "string" && value.startsWith("/api/files/")) {
-    return `${VERCEL_API}${value}`;
+    return `${VERCEL_API}${value.replace(/^\/api/, "")}`;
   }
 
   if (Array.isArray(value)) {
