@@ -8,7 +8,7 @@ import Admin from "@/pages/Admin";
 
 export default function App() {
   const queryClient = useQueryClient();
-  const { data } = useQuery({ queryKey: ["site-content"], queryFn: fetchContent, staleTime: 30_000, retry: 1 });
+  const { data, isLoading } = useQuery({ queryKey: ["site-content"], queryFn: fetchContent, staleTime: 30_000, retry: 1 });
   const [editMode, setEditMode] = useState(() => !!getToken());
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function App() {
   const refresh = () => {
     void queryClient.invalidateQueries({ queryKey: ["site-content"] });
   };
-
+  if (isLoading && !data) return null;
   return (
     <ContentContext.Provider value={{ content: data ?? {}, refresh, editMode, setEditMode }}>
       <Routes>
