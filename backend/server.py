@@ -217,7 +217,13 @@ async def serve_file(path: str):
     if not record:
         raise HTTPException(status_code=404, detail="File not found")
     data, content_type = await asyncio.to_thread(get_object, path)
-    return Response(content=data, media_type=record.get("content_type") or content_type)
+    return Response(
+    content=data,
+    media_type=record.get("content_type") or content_type,
+    headers={
+        "Cache-Control": "public, max-age=31536000, immutable"
+    }
+)
 
 @api_router.get("/content")
 async def get_content():
