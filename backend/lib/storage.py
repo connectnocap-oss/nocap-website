@@ -1,54 +1,69 @@
-"""Emergent object storage — session key + put/get helpers (integration playbook)."""
+"""Cloudflare R2 object storage using its S3-compatible API.
+
+Keeps the existing NoCap storage interface: init_storage(), put_object(), get_object().
+Required environment variables:
+  R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_ENDPOINT_URL
+Optional: R2_REGION (defaults to 'auto')
+"""
 
 import os
+from functools import lru_cache
+from urllib.parse import quote
 
-import requests
+import boto3
+from botocore.config import Config
 
-STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
-STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
-EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+
 APP_NAME = "nocap"
 
-storage_key = None
+
+def _required_env(name: str) -> str:
+    value = (os.environ.get(name) or "").strip()
+    if not value:
+        raise RuntimeError(f"Missing required environment variable: {name}")
+    return value
+
+
+@lru_cache(maxsize=1)
+def _client():
+    return boto3.client(
+        "s3",
+        endpoint_url=_required_env("R2_ENDPOINT_URL"),
+        aws_access_key_id=_required_env("R2_ACCESS_KEY_ID"),
+        aws_secret_access_key=_required_env("R2_SECRET_ACCESS_KEY"),
+        region_name=(os.environ.get("R2_REGION") or "auto").strip(),
+        config=Config(signature_version="s3v4", retries={"max_attempts": 3, "mode": "standard"}),
+    )
 
 
 def init_storage(force: bool = False):
-    """Session-scoped storage key; force=True mints a new one (recovery from an inactive key)."""
-    global storage_key
-    if storage_key and not force:
-        return storage_key
-    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
-    resp.raise_for_status()
-    storage_key = resp.json()["storage_key"]
-    return storage_key
+    """Initialize and validate access to the configured R2 bucket."""
+    bucket = _required_env("R2_BUCKET_NAME")
+    _client().head_bucket(Bucket=bucket)
+    return bucket
 
 
 def put_object(path: str, data: bytes, content_type: str) -> dict:
-    key = init_storage()
-    resp = requests.put(
-        f"{STORAGE_URL}/objects/{path}",
-        headers={"X-Storage-Key": key, "Content-Type": content_type},
-        data=data,
-        timeout=120,
+    """Store bytes at the supplied object key and return legacy-compatible metadata."""
+    if not path or path.startswith("/") or ".." in path.split("/"):
+        raise ValueError("Invalid object path")
+    bucket = _required_env("R2_BUCKET_NAME")
+    _client().put_object(
+        Bucket=bucket,
+        Key=path,
+        Body=data,
+        ContentType=content_type or "application/octet-stream",
     )
-    if resp.status_code == 404:  # storage_key went inactive mid-session: force re-init once
-        key = init_storage(force=True)
-        resp = requests.put(
-            f"{STORAGE_URL}/objects/{path}",
-            headers={"X-Storage-Key": key, "Content-Type": content_type},
-            data=data,
-            timeout=120,
-        )
-    resp.raise_for_status()
-    return resp.json()
+    return {"path": path, "size": len(data)}
 
 
 def get_object(path: str) -> tuple[bytes, str]:
-    key = init_storage()
-    resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
-    if resp.status_code == 404:
-        retry = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": init_storage(force=True)}, timeout=60)
-        if retry.status_code != 404:
-            resp = retry
-    resp.raise_for_status()
-    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+    """Retrieve an object and return (bytes, content_type), matching the old interface."""
+    bucket = _required_env("R2_BUCKET_NAME")
+    response = _client().get_object(Bucket=bucket, Key=path)
+    body = response["Body"]
+    try:
+        data = body.read()
+    finally:
+        body.close()
+    return data, response.get("ContentType", "application/octet-stream")
