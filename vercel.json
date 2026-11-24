@@ -9,6 +9,13 @@
       "entrypoint": "server:app"
     }
   },
+  "redirects": [
+    {
+      "source": "/((?!api(?:/|$)).*)",
+      "destination": "https://itsnocap.com/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api(/.*)?",

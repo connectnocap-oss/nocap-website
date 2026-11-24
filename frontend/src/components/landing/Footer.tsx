@@ -224,6 +224,16 @@ export default function Footer() {
                 {label}
               </button>
             ))}
+            {[
+              ["About", "/about/"],
+              ["Contact", "/contact/"],
+              ["Terms", "/terms/"],
+              ["Privacy", "/privacy/"],
+            ].map(([label, href]) => (
+              <a key={href} href={href} className="transition-colors duration-300 hover:text-[#C6F24E]">
+                {label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

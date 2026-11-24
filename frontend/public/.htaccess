@@ -1,0 +1,33 @@
+DirectoryIndex index.html
+Options -MultiViews
+
+AddType "text/plain; charset=utf-8" .txt
+AddType "text/markdown; charset=utf-8" .md
+AddType "application/json; charset=utf-8" .json
+AddType "application/xml; charset=utf-8" .xml
+
+<IfModule mod_headers.c>
+  # RFC 8288: advertise the Markdown version and llms.txt to agents
+  Header always set Link '</index.md>; rel="alternate"; type="text/markdown", </llms.txt>; rel="describedby"; type="text/plain", </.well-known/mcp/server-card.json>; rel="service-desc"; type="application/json"'
+  Header append Vary Accept
+</IfModule>
+
+RewriteEngine On
+RewriteBase /
+
+# One canonical host: send www to the bare domain
+RewriteCond %{HTTP_HOST} ^www\.itsnocap\.com$ [NC]
+RewriteRule ^(.*)$ https://itsnocap.com/$1 [R=301,L]
+
+# MCP endpoint
+RewriteRule ^mcp/?$ mcp.php [L]
+
+# Serve Markdown to agents that ask for it (Accept: text/markdown)
+RewriteCond %{HTTP_ACCEPT} text/markdown [NC]
+RewriteRule ^(index\.html)?$ index.md [L]
+
+# The React app has only two routes: / and /admin. Everything else that
+# doesn't exist as a file gets a real 404 (agents read 200 as "page exists").
+RewriteRule ^admin/?$ index.html [L]
+
+ErrorDocument 404 /404.html

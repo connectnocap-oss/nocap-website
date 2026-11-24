@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
+  "version": "1.0",
+  "protocolVersion": "2025-06-18",
+  "serverInfo": {
+    "name": "com.itsnocap/site",
+    "title": "NOCAP",
+    "version": "1.0.0"
+  },
+  "name": "com.itsnocap/site",
+  "description": "Read-only information about NOCAP, a creative and influencer marketing agency: services, case studies and contact details.",
+  "websiteUrl": "https://itsnocap.com/",
+  "endpoint": "https://itsnocap.com/mcp",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://itsnocap.com/mcp"
+  },
+  "remotes": [
+    { "type": "streamable-http", "url": "https://itsnocap.com/mcp" }
+  ],
+  "capabilities": {
+    "tools": { "listChanged": false }
+  },
+  "authentication": { "required": false },
+  "tools": [
+    { "name": "list_services", "description": "List the marketing services NOCAP offers." },
+    { "name": "get_case_studies", "description": "Get NOCAP case studies, headline stats and brands worked with." },
+    { "name": "get_contact_details", "description": "Get NOCAP's contact email, Instagram and cities." }
+  ]
+}

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { DEFAULT_ART } from "@/lib/data";
 import { saveContent, useSiteContent, useText } from "@/lib/content";
@@ -12,7 +12,8 @@ export default function ArtBreak() {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], ["-5%", reduce ? "0%" : "5%"]);
-  const art = content.artImage ?? DEFAULT_ART;
+  const [artFailed, setArtFailed] = useState(false);
+  const art = artFailed ? DEFAULT_ART : (content.artImage ?? DEFAULT_ART);
 
   const saveArt = async (url: string) => {
     await saveContent({ ...content, artImage: url });
@@ -24,6 +25,7 @@ export default function ArtBreak() {
       <motion.img
         src={art}
         alt="NOCAP creator collage"
+        onError={() => setArtFailed(true)}
         style={{ x, scale: 1.12, objectPosition: content.imagePos?.["art"] }}
         className="h-[46vh] w-full object-cover sm:h-[60vh]"
         data-testid="art-break-image"
