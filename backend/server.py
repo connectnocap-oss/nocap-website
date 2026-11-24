@@ -23,6 +23,7 @@ load_dotenv(ROOT_DIR / '.env')
 from lib.db import client, db, ensure_indexes
 from lib.storage import init_storage, put_object, get_object, APP_NAME
 from lib.email import send_enquiry_notification
+from lib.indexnow import notify_content_changed
 
 JWT_ALGORITHM = "HS256"
 LOCKOUT_THRESHOLD = 5
@@ -233,6 +234,11 @@ async def get_content():
 @api_router.put("/content")
 async def put_content(update: ContentUpdate, _: None = Depends(require_admin)):
     _ = await db.content.update_one({"id": "site"}, {"$set": {"data": update.data}}, upsert=True)
+    try:
+        # Tell IndexNow the homepage changed (throttled, best effort, never fails the save).
+        await notify_content_changed(db)
+    except Exception as exc:
+        logger.error("indexnow notification failed: %s", exc)
     return {"ok": True}
 
 # Include the router in the main app
