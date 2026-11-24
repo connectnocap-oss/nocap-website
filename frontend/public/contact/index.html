@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact NOCAP</title>
+<meta name="description" content="Contact NOCAP by email, Instagram or the enquiry form. We reply within 24 hours." />
+<link rel="canonical" href="https://itsnocap.com/contact/" />
+<link rel="icon" type="image/svg+xml" href="/nocap-favicon.svg" />
+<style>body{max-width:720px;margin:0 auto;padding:2rem 1.25rem;font:16px/1.6 system-ui,sans-serif;color:#121212;background:#FBF8F2}a{color:#143D2B}label{display:block;margin-top:.75rem}input,textarea{width:100%;padding:.5rem;font:inherit}button{margin-top:1rem;padding:.6rem 1.4rem;background:#C6F24E;border:0;border-radius:99px;font:inherit;cursor:pointer}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://itsnocap.com/#org","name":"NOCAP","url":"https://itsnocap.com/","email":"connect.nocap@gmail.com","telephone":"+91-8826013867","address":{"@type":"PostalAddress","addressLocality":"Delhi","addressRegion":"Delhi","addressCountry":"IN"},"sameAs":["https://instagram.com/nocapconnect"]},{"@type":"ContactPage","url":"https://itsnocap.com/contact/","name":"Contact NOCAP","about":{"@id":"https://itsnocap.com/#org"}}]}</script>
+</head>
+<body>
+<nav><a href="/">Home</a> · <a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></nav>
+<main>
+<h1>Contact NOCAP</h1>
+<p>Email <a href="mailto:connect.nocap@gmail.com">connect.nocap@gmail.com</a> call <a href="tel:+918826013867">+91 88260 13867</a>, or message <a href="https://instagram.com/nocapconnect">@nocapconnect on Instagram</a>. We're based in Delhi, India, and work across Mumbai, Bengaluru, Delhi and Dubai.</p>
+<h2>Send a brief</h2>
+<form id="brief" toolname="send_brief" tooldescription="Send a project brief to NOCAP. Use only when the user asked to contact NOCAP and confirmed the details.">
+<label for="n">Your name</label><input id="n" name="name" required toolparamdescription="The user's full name" />
+<label for="e">Email</label><input id="e" name="email" type="email" required toolparamdescription="Email address NOCAP should reply to" />
+<label for="b">Brand (optional)</label><input id="b" name="brand" toolparamdescription="Brand or company name" />
+<label for="m">What are we solving?</label><textarea id="m" name="message" rows="4" required toolparamdescription="What the user wants help with"></textarea>
+<button type="submit">Send the brief</button>
+<p id="status" role="status"></p>
+</form>
+<script>
+document.getElementById("brief").addEventListener("submit",function(ev){ev.preventDefault();var f=ev.target,s=document.getElementById("status");s.textContent="Sending…";
+fetch("https://nocap-website-eta.vercel.app/api/enquiries",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.name.value,email:f.email.value,brand:f.brand.value||null,message:f.message.value})})
+.then(function(r){s.textContent=r.ok?"Brief received. Expect a reply within 24 hours.":"Couldn't send that. Email connect.nocap@gmail.com instead.";if(r.ok)f.reset();if(ev.respondWith)ev.respondWith(s.textContent)})
+.catch(function(){s.textContent="Couldn't send that. Email connect.nocap@gmail.com instead."})});
+</script>
+</main>
+<footer><p>© 2026 NOCAP · <a href="mailto:connect.nocap@gmail.com">connect.nocap@gmail.com</a> · <a href="tel:+918826013867">+91 88260 13867</a> · Delhi, India · <a href="https://instagram.com/nocapconnect">Instagram</a></p></footer>
+</body>
+</html>
