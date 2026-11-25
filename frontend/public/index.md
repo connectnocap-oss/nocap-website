@@ -36,6 +36,7 @@ Brands we've worked with include Tinder, Tira, Nykaa, Reliance, Lotto, Stoli, Fa
 - WhatsApp: [chat with us](https://wa.me/918826013867)
 - Office: Delhi, India
 - Instagram: [@nocapconnect](https://instagram.com/nocapconnect)
+- LinkedIn: [NoCap](https://www.linkedin.com/in/nocap-connect-0303b237a)
 - Enquiry form: [itsnocap.com/contact](https://itsnocap.com/contact/)
 
 [About](https://itsnocap.com/about/) · [Terms](https://itsnocap.com/terms/) · [Privacy](https://itsnocap.com/privacy/)

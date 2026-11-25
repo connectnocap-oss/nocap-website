@@ -1,7 +1,7 @@
 // Google Analytics 4 for itsnocap.com. Loads nothing until GA_ID is set.
 // Conversion events (sent from the site): generate_lead, click_whatsapp, click_phone, click_email.
 (function () {
-  var GA_ID = ""; // e.g. "G-XXXXXXXXXX"
+  var GA_ID = "G-730ZZCHMF8"; // e.g. "G-XXXXXXXXXX"
   if (!GA_ID || /^(localhost|127\.)/.test(location.hostname)) return;
 
   window.dataLayer = window.dataLayer || [];
