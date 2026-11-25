@@ -116,7 +116,9 @@ async def send_email(*, to: str, subject: str, html: str) -> str | None:
         raise HTTPException(status_code=500, detail="Failed to send email")
 
 
-async def send_enquiry_notification(*, name: str, email: str, brand: str | None, message: str) -> None:
+async def send_enquiry_notification(
+    *, name: str, email: str, brand: str | None, message: str, details: dict[str, str | None] | None = None
+) -> None:
     subject = f"New brief from {name[:80]}"
     html = (
         '<table role="presentation" width="100%"><tr><td style="padding:24px;'
@@ -126,6 +128,8 @@ async def send_enquiry_notification(*, name: str, email: str, brand: str | None,
         f'<p><strong>Name:</strong> {escape(name)}</p>'
         f'<p><strong>Email:</strong> {escape(email)}</p>'
         f'<p><strong>Brand:</strong> {escape(brand) if brand else "—"}</p>'
+        + "".join(f'<p><strong>{escape(k)}:</strong> {escape(v)}</p>' for k, v in (details or {}).items() if v)
+        +
         f'<p><strong>Brief:</strong></p>'
         f'<p style="padding:16px;background:#F3EFE6;border-radius:12px">{escape(message)}</p>'
         f'<p style="font-size:12px;color:#888">Sent by the {escape(EMAIL_FROM_NAME)} website. '

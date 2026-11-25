@@ -1,4 +1,4 @@
-# NOCAP — culture-first creative & influencer marketing agency
+# NoCap — culture-first creative & influencer marketing agency
 
 You didn't find us. We let you. We don't grow brands — we make them profitable. Strategy, deals and attention for brands across Mumbai, Bengaluru, Delhi and Dubai.
 
@@ -33,6 +33,7 @@ Brands we've worked with include Tinder, Tira, Nykaa, Reliance, Lotto, Stoli, Fa
 
 - Email: [connect.nocap@gmail.com](mailto:connect.nocap@gmail.com)
 - Phone: [+91 88260 13867](tel:+918826013867)
+- WhatsApp: [chat with us](https://wa.me/918826013867)
 - Office: Delhi, India
 - Instagram: [@nocapconnect](https://instagram.com/nocapconnect)
 - Enquiry form: [itsnocap.com/contact](https://itsnocap.com/contact/)

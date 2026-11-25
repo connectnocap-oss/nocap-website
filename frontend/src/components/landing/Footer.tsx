@@ -1,19 +1,20 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, LoaderCircle, Mail } from "lucide-react";
+import { ArrowRight, LoaderCircle, Mail, MessageCircle } from "lucide-react";
 import { SiInstagram } from "@icons-pack/react-simple-icons";
 import { toast } from "sonner";
 import { apiPost } from "@/lib/api";
 import type { Enquiry } from "@/lib/data";
 import { scrollToSection } from "@/lib/scroll";
 import { useText } from "@/lib/content";
+import { BUDGET_OPTIONS, SERVICE_OPTIONS, leadContext, track, whatsappLink } from "@/lib/leads";
 import LogoMark from "./LogoMark";
 import Starburst from "./Starburst";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
-const EMPTY = { name: "", email: "", brand: "", message: "" };
+const EMPTY = { name: "", email: "", brand: "", service: "", budget: "", message: "" };
 
 export default function Footer() {
   const t = useText();
@@ -24,7 +25,14 @@ export default function Footer() {
     e.preventDefault();
     setSending(true);
     try {
-      await apiPost<Enquiry>("/enquiries", { ...form, brand: form.brand || null });
+      await apiPost<Enquiry>("/enquiries", {
+        ...form,
+        brand: form.brand || null,
+        service: form.service || null,
+        budget: form.budget || null,
+        ...leadContext(),
+      });
+      track("generate_lead", { form: "footer", service: form.service || undefined, budget: form.budget || undefined });
       toast.success("Brief received. Expect a call within 24 hours — no cap.");
       setForm(EMPTY);
     } catch {
@@ -94,14 +102,32 @@ export default function Footer() {
               >
                 {t("footer.ctaSecondary")}
               </button>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => track("click_whatsapp", { location: "footer_cta" })}
+                className="flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-mono text-xs tracking-[0.18em] text-[#FBF8F2] uppercase transition-colors duration-300 hover:border-[#C6F24E] hover:text-[#C6F24E]"
+                data-testid="footer-whatsapp-button"
+              >
+                <MessageCircle size={14} /> WhatsApp us
+              </a>
             </motion.div>
             <div className="mt-10 space-y-2 font-mono text-xs tracking-[0.15em] text-[#A1A1AA] uppercase">
               <a
                 href={`mailto:${t("footer.email")}`}
+                onClick={() => track("click_email", { location: "footer" })}
                 className="block transition-colors duration-300 hover:text-[#C6F24E]"
                 data-testid="footer-email"
               >
                 {t("footer.email")}
+              </a>
+              <a
+                href="tel:+918826013867"
+                onClick={() => track("click_phone", { location: "footer" })}
+                className="block transition-colors duration-300 hover:text-[#C6F24E]"
+              >
+                +91 88260 13867
               </a>
               <p>{t("footer.hubs")}</p>
             </div>
@@ -174,6 +200,28 @@ export default function Footer() {
                 className="border-white/15 bg-transparent text-[#FBF8F2] placeholder:text-[#A1A1AA]/50"
                 data-testid="contact-brand-input"
               />
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {([
+                ["service", "What do you need?", SERVICE_OPTIONS],
+                ["budget", "Budget (optional)", BUDGET_OPTIONS],
+              ] as const).map(([key, label, options]) => (
+                <div key={key} className="space-y-2">
+                  <Label htmlFor={`contact-${key}`} className="text-xs text-[#A1A1AA]">{label}</Label>
+                  <select
+                    id={`contact-${key}`}
+                    value={form[key]}
+                    onChange={set(key)}
+                    className="h-9 w-full rounded-md border border-white/15 bg-transparent px-3 text-sm text-[#FBF8F2] outline-none focus-visible:border-[#C6F24E] [&>option]:bg-[#0D0F0E]"
+                    data-testid={`contact-${key}-select`}
+                  >
+                    <option value="">Choose…</option>
+                    {options.map((o) => (
+                      <option key={o} value={o}>{o}</option>
+                    ))}
+                  </select>
+                </div>
+              ))}
             </div>
             <div className="space-y-2">
               <Label htmlFor="contact-message" className="text-xs text-[#A1A1AA]">What are we solving?</Label>

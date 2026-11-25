@@ -4,11 +4,11 @@
   "protocolVersion": "2025-06-18",
   "serverInfo": {
     "name": "com.itsnocap/site",
-    "title": "NOCAP",
+    "title": "NoCap",
     "version": "1.0.0"
   },
   "name": "com.itsnocap/site",
-  "description": "Read-only information about NOCAP, a creative and influencer marketing agency: services, case studies and contact details.",
+  "description": "Read-only information about NoCap, a creative and influencer marketing agency: services, case studies and contact details.",
   "websiteUrl": "https://itsnocap.com/",
   "endpoint": "https://itsnocap.com/mcp",
   "transport": {
@@ -23,8 +23,8 @@
   },
   "authentication": { "required": false },
   "tools": [
-    { "name": "list_services", "description": "List the marketing services NOCAP offers." },
-    { "name": "get_case_studies", "description": "Get NOCAP case studies, headline stats and brands worked with." },
-    { "name": "get_contact_details", "description": "Get NOCAP's contact email, Instagram and cities." }
+    { "name": "list_services", "description": "List the marketing services NoCap offers." },
+    { "name": "get_case_studies", "description": "Get NoCap case studies, headline stats and brands worked with." },
+    { "name": "get_contact_details", "description": "Get NoCap's contact email, Instagram and cities." }
   ]
 }
