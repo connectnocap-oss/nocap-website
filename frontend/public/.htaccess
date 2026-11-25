@@ -17,6 +17,11 @@ AddType "application/xml; charset=utf-8" .xml
   <FilesMatch "\.(png|jpe?g|webp|svg|ico)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
+  # Un-hashed scripts in the site root (analytics.js, webmcp.js) change in place:
+  # keep them fresh instead of the host's 1-week default.
+  <FilesMatch "\.js$">
+    Header set Cache-Control "public, max-age=300, must-revalidate"
+  </FilesMatch>
 </IfModule>
 
 RewriteEngine On
