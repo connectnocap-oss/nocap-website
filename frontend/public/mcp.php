@@ -19,11 +19,11 @@ if ($method !== 'POST') {
 $site = json_decode((string) @file_get_contents(__DIR__ . '/data/site.json'), true) ?: [];
 
 $tools = [
-    ['name' => 'list_services', 'description' => 'List the marketing services NOCAP offers, with a description and tags for each.',
+    ['name' => 'list_services', 'description' => 'List the marketing services NoCap offers, with a description and tags for each.',
      'inputSchema' => ['type' => 'object', 'properties' => new stdClass()], 'annotations' => ['readOnlyHint' => true]],
-    ['name' => 'get_case_studies', 'description' => 'Get NOCAP case studies, headline stats and brands worked with.',
+    ['name' => 'get_case_studies', 'description' => 'Get NoCap case studies, headline stats and brands worked with.',
      'inputSchema' => ['type' => 'object', 'properties' => new stdClass()], 'annotations' => ['readOnlyHint' => true]],
-    ['name' => 'get_contact_details', 'description' => "Get NOCAP's contact email, phone, address, Instagram profile and cities.",
+    ['name' => 'get_contact_details', 'description' => "Get NoCap's contact email, phone, address, Instagram profile and cities.",
      'inputSchema' => ['type' => 'object', 'properties' => new stdClass()], 'annotations' => ['readOnlyHint' => true]],
 ];
 
@@ -46,8 +46,8 @@ function handle($msg, $site, $tools) {
             $result = [
                 'protocolVersion' => in_array($requested, $supported, true) ? $requested : '2025-06-18',
                 'capabilities' => ['tools' => ['listChanged' => false]],
-                'serverInfo' => ['name' => 'com.itsnocap/site', 'title' => 'NOCAP', 'version' => '1.0.0'],
-                'instructions' => 'Read-only information about NOCAP, a creative and influencer marketing agency.',
+                'serverInfo' => ['name' => 'com.itsnocap/site', 'title' => 'NoCap', 'version' => '1.0.0'],
+                'instructions' => 'Read-only information about NoCap, a creative and influencer marketing agency.',
             ];
             break;
         case 'ping':
@@ -63,7 +63,7 @@ function handle($msg, $site, $tools) {
             } elseif ($name === 'get_case_studies') {
                 $result = result_text(['caseStudies' => $site['caseStudies'] ?? [], 'stats' => $site['stats'] ?? [], 'brands' => $site['brands'] ?? []]);
             } elseif ($name === 'get_contact_details') {
-                $result = result_text(['email' => $site['email'] ?? null, 'telephone' => $site['telephone'] ?? null, 'address' => $site['address'] ?? null, 'instagram' => $site['instagram'] ?? null, 'hubs' => $site['hubs'] ?? [], 'contactPage' => 'https://itsnocap.com/contact/']);
+                $result = result_text(['email' => $site['email'] ?? null, 'telephone' => $site['telephone'] ?? null, 'whatsapp' => $site['whatsapp'] ?? null, 'address' => $site['address'] ?? null, 'instagram' => $site['instagram'] ?? null, 'hubs' => $site['hubs'] ?? [], 'contactPage' => 'https://itsnocap.com/contact/']);
             } else {
                 return $isNotification ? null : ['jsonrpc' => '2.0', 'id' => $id, 'error' => ['code' => -32602, 'message' => "Unknown tool: $name"]];
             }

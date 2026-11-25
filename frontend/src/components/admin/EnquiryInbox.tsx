@@ -50,7 +50,18 @@ export default function EnquiryInbox() {
                 >
                   {q.email}
                 </a>
+                {(q.service || q.budget) && (
+                  <p className="mt-2 flex flex-wrap gap-2 text-xs">
+                    {q.service && <span className="rounded-full bg-[#F3EFE6] px-2.5 py-1">{q.service}</span>}
+                    {q.budget && <span className="rounded-full bg-[#F3EFE6] px-2.5 py-1">{q.budget}</span>}
+                  </p>
+                )}
                 <p className="mt-2 text-sm leading-relaxed text-[#44403C]">{q.message}</p>
+                {(q.utm_source || q.referrer || q.page) && (
+                  <p className="mt-2 font-mono text-[10px] tracking-[0.05em] text-[#78716C]">
+                    Source: {[q.utm_source && `${q.utm_source}${q.utm_medium ? ` / ${q.utm_medium}` : ""}${q.utm_campaign ? ` / ${q.utm_campaign}` : ""}`, q.referrer, q.page].filter(Boolean).join(" · ")}
+                  </p>
+                )}
               </div>
             ))}
           </div>

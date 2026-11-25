@@ -1,4 +1,4 @@
-# NOCAP — https://itsnocap.com
+# NoCap — https://itsnocap.com
 # Content Signals (https://contentsignals.org): search and AI answers may use this site; AI training may not.
 User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=no

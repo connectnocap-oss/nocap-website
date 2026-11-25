@@ -116,6 +116,15 @@ class EnquiryCreate(BaseModel):
     email: EmailStr
     brand: Optional[str] = Field(default=None, max_length=120)
     message: str = Field(min_length=1, max_length=2000)
+    # Lead qualification (optional)
+    service: Optional[str] = Field(default=None, max_length=80)
+    budget: Optional[str] = Field(default=None, max_length=40)
+    # Attribution captured by the site (optional)
+    page: Optional[str] = Field(default=None, max_length=200)
+    referrer: Optional[str] = Field(default=None, max_length=300)
+    utm_source: Optional[str] = Field(default=None, max_length=100)
+    utm_medium: Optional[str] = Field(default=None, max_length=100)
+    utm_campaign: Optional[str] = Field(default=None, max_length=100)
 
 class Enquiry(EnquiryCreate):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -153,7 +162,12 @@ async def create_enquiry(input: EnquiryCreate):
     _ = await db.enquiries.insert_one(enquiry.model_dump())
     try:
         await send_enquiry_notification(
-            name=enquiry.name, email=enquiry.email, brand=enquiry.brand, message=enquiry.message
+            name=enquiry.name, email=enquiry.email, brand=enquiry.brand, message=enquiry.message,
+            details={
+                "Service": enquiry.service, "Budget": enquiry.budget, "Page": enquiry.page,
+                "Referrer": enquiry.referrer, "UTM source": enquiry.utm_source,
+                "UTM medium": enquiry.utm_medium, "UTM campaign": enquiry.utm_campaign,
+            },
         )
     except Exception as exc:
         logger.error("enquiry email failed: %s", exc)

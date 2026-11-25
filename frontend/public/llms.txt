@@ -1,11 +1,11 @@
-# NOCAP
+# NoCap
 
-> NOCAP is a culture-first creative and influencer marketing agency working from Mumbai, Bengaluru, Delhi and Dubai. We run social media, source and manage creators, close brand deals, produce content and run Meta and ChatGPT ads. Based in Delhi, India. Contact: connect.nocap@gmail.com, +91 88260 13867.
+> NoCap is a culture-first creative and influencer marketing agency working from Mumbai, Bengaluru, Delhi and Dubai. We run social media, source and manage creators, close brand deals, produce content and run Meta and ChatGPT ads. Based in Delhi, India. Contact: connect.nocap@gmail.com, +91 88260 13867 (also on WhatsApp: https://wa.me/918826013867).
 
 ## Key pages
 
 - [Home](https://itsnocap.com/index.md): services, case studies, results and how to reach us (Markdown)
-- [About](https://itsnocap.com/about/): who NOCAP is and how we work
+- [About](https://itsnocap.com/about/): who NoCap is and how we work
 - [Contact](https://itsnocap.com/contact/): email, Instagram and the enquiry form
 - [Terms of use](https://itsnocap.com/terms/)
 - [Privacy policy](https://itsnocap.com/privacy/)

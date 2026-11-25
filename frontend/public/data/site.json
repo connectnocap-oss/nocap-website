@@ -1,25 +1,107 @@
 {
-  "name": "NOCAP",
+  "name": "NoCap",
   "url": "https://itsnocap.com/",
-  "description": "NOCAP is a culture-first creative and influencer marketing agency. Strategy, content, influence and events built around what your brand actually needs.",
+  "description": "NoCap is a culture-first creative and influencer marketing agency. Strategy, content, influence and events built around what your brand actually needs.",
   "email": "connect.nocap@gmail.com",
   "telephone": "+91 88260 13867",
   "address": "Delhi, India",
-  "instagram":"https://instagram.com/nocapconnect",
-  "hubs": ["Mumbai", "Bengaluru", "Delhi", "Dubai"],
+  "instagram": "https://instagram.com/nocapconnect",
+  "hubs": [
+    "Mumbai",
+    "Bengaluru",
+    "Delhi",
+    "Dubai"
+  ],
   "services": [
-    { "title": "Brand Integration", "description": "We pitch, negotiate and close brand deals so the offer comes to you.", "tags": ["Outreach", "Rate Negotiation", "Contracts"] },
-    { "title": "Influencer Marketing & Sourcing", "description": "Creator sourcing and vetting done right the first time: three right-fit partners beat twenty mismatched ones.", "tags": ["Sourcing", "Vetting", "Campaign Management"] },
-    { "title": "Social Media Management", "description": "Content strategy, production and a calendar tied to a business outcome.", "tags": ["Strategy", "Content Calendar", "Community"] },
-    { "title": "Cinematography & Photography", "description": "Sharp visuals, thoughtful compositions and cinematic movement for your brand.", "tags": ["Cinematography", "Photography", "Visual Storytelling"] },
-    { "title": "Studio Shoots", "description": "Product-first setups and campaign-ready studio content that looks intentional and on-brand.", "tags": ["Product Shoots", "Studio Content", "Campaigns"] },
-    { "title": "Creative Edits", "description": "Raw footage turned into scroll-stopping content with sharp cuts, motion, typography and creative direction.", "tags": ["Video Editing", "Motion Graphics", "Reels"] },
-    { "title": "Meta & ChatGPT Ads", "description": "Targeted ad campaigns and AI-powered experiences that reach the right audience at the right moment.", "tags": ["Meta Ads", "ChatGPT Ads", "Performance Marketing"] }
+    {
+      "title": "Brand Integration",
+      "description": "We pitch, negotiate and close brand deals so the offer comes to you.",
+      "tags": [
+        "Outreach",
+        "Rate Negotiation",
+        "Contracts"
+      ]
+    },
+    {
+      "title": "Influencer Marketing & Sourcing",
+      "description": "Creator sourcing and vetting done right the first time: three right-fit partners beat twenty mismatched ones.",
+      "tags": [
+        "Sourcing",
+        "Vetting",
+        "Campaign Management"
+      ]
+    },
+    {
+      "title": "Social Media Management",
+      "description": "Content strategy, production and a calendar tied to a business outcome.",
+      "tags": [
+        "Strategy",
+        "Content Calendar",
+        "Community"
+      ]
+    },
+    {
+      "title": "Cinematography & Photography",
+      "description": "Sharp visuals, thoughtful compositions and cinematic movement for your brand.",
+      "tags": [
+        "Cinematography",
+        "Photography",
+        "Visual Storytelling"
+      ]
+    },
+    {
+      "title": "Studio Shoots",
+      "description": "Product-first setups and campaign-ready studio content that looks intentional and on-brand.",
+      "tags": [
+        "Product Shoots",
+        "Studio Content",
+        "Campaigns"
+      ]
+    },
+    {
+      "title": "Creative Edits",
+      "description": "Raw footage turned into scroll-stopping content with sharp cuts, motion, typography and creative direction.",
+      "tags": [
+        "Video Editing",
+        "Motion Graphics",
+        "Reels"
+      ]
+    },
+    {
+      "title": "Meta & ChatGPT Ads",
+      "description": "Targeted ad campaigns and AI-powered experiences that reach the right audience at the right moment.",
+      "tags": [
+        "Meta Ads",
+        "ChatGPT Ads",
+        "Performance Marketing"
+      ]
+    }
   ],
   "caseStudies": [
-    { "client": "PRFCTSOUND", "focus": "Artist Social Management", "results": ["5.2x engagement growth in 90 days", "5K+ new followers from organic content"] },
-    { "client": "Tinder India", "focus": "Influencer Marketing", "results": ["3.5M+ total campaign reach", "50+ creator partnerships in a single campaign"] },
-    { "client": "Skullcandy", "focus": "Brand Integration", "results": ["10+ events activated", "500+ event attendees"] }
+    {
+      "client": "PRFCTSOUND",
+      "focus": "Artist Social Management",
+      "results": [
+        "5.2x engagement growth in 90 days",
+        "5K+ new followers from organic content"
+      ]
+    },
+    {
+      "client": "Tinder India",
+      "focus": "Influencer Marketing",
+      "results": [
+        "3.5M+ total campaign reach",
+        "50+ creator partnerships in a single campaign"
+      ]
+    },
+    {
+      "client": "Skullcandy",
+      "focus": "Brand Integration",
+      "results": [
+        "10+ events activated",
+        "500+ event attendees"
+      ]
+    }
   ],
   "stats": [
     "12+ industries we've run campaigns in",
@@ -29,5 +111,25 @@
     "10.8M+ organic and campaign reach",
     "72% average engagement uplift"
   ],
-  "brands": ["Tinder", "Tira", "Nykaa", "Reliance", "Lotto", "Stoli", "Fast&Up", "Tito's Handmade", "Greater Than", "Kati Patang", "Casa Claro", "Pistola", "Catwalk", "Monkey Shoulder"]
+  "brands": [
+    "Tinder",
+    "Tira",
+    "Nykaa",
+    "Reliance",
+    "Lotto",
+    "Stoli",
+    "Fast&Up",
+    "Tito's Handmade",
+    "Greater Than",
+    "Kati Patang",
+    "Casa Claro",
+    "Pistola",
+    "Catwalk",
+    "Monkey Shoulder"
+  ],
+  "whatsapp": "https://wa.me/918826013867",
+  "alternateNames": [
+    "NOCAP",
+    "itsnocap"
+  ]
 }

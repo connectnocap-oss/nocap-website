@@ -15,34 +15,36 @@
   var tools = [
     {
       name: "list_services",
-      description: "List the marketing services NOCAP offers, with a short description and tags for each.",
+      description: "List the marketing services NoCap offers, with a short description and tags for each.",
       inputSchema: { type: "object", properties: {} },
       annotations: { readOnlyHint: true },
       execute: function () { return getSite().then(function (d) { return text(d.services); }); }
     },
     {
       name: "get_case_studies",
-      description: "Get NOCAP case studies (client, focus and measured results) and headline agency stats.",
+      description: "Get NoCap case studies (client, focus and measured results) and headline agency stats.",
       inputSchema: { type: "object", properties: {} },
       annotations: { readOnlyHint: true },
       execute: function () { return getSite().then(function (d) { return text({ caseStudies: d.caseStudies, stats: d.stats, brands: d.brands }); }); }
     },
     {
       name: "get_contact_details",
-      description: "Get NOCAP's contact email, phone, address, Instagram profile and the cities it works from.",
+      description: "Get NoCap's contact email, phone, address, Instagram profile and the cities it works from.",
       inputSchema: { type: "object", properties: {} },
       annotations: { readOnlyHint: true },
-      execute: function () { return getSite().then(function (d) { return text({ email: d.email, telephone: d.telephone, address: d.address, instagram: d.instagram, hubs: d.hubs, contactPage: "https://itsnocap.com/contact/" }); }); }
+      execute: function () { return getSite().then(function (d) { return text({ email: d.email, telephone: d.telephone, whatsapp: d.whatsapp, address: d.address, instagram: d.instagram, hubs: d.hubs, contactPage: "https://itsnocap.com/contact/" }); }); }
     },
     {
       name: "send_enquiry",
-      description: "Send a project brief to NOCAP on the user's behalf. Only call this when the user has asked to contact NOCAP and has confirmed the details. NOCAP replies by email.",
+      description: "Send a project brief to NoCap on the user's behalf. Only call this when the user has asked to contact NoCap and has confirmed the details. NoCap replies by email.",
       inputSchema: {
         type: "object",
         properties: {
           name: { type: "string", description: "The user's full name" },
-          email: { type: "string", format: "email", description: "Email address NOCAP should reply to" },
+          email: { type: "string", format: "email", description: "Email address NoCap should reply to" },
           brand: { type: "string", description: "Brand or company name (optional)" },
+          service: { type: "string", description: "Service needed (optional), e.g. influencer marketing, social media management, content production" },
+          budget: { type: "string", description: "Approximate budget (optional), e.g. ₹1–3 lakh" },
           message: { type: "string", description: "What the user wants help with" }
         },
         required: ["name", "email", "message"]
@@ -51,9 +53,9 @@
         return fetch("https://nocap-website-eta.vercel.app/api/enquiries", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: input.name, email: input.email, brand: input.brand || null, message: input.message })
+          body: JSON.stringify({ name: input.name, email: input.email, brand: input.brand || null, service: input.service || null, budget: input.budget || null, message: input.message, page: "webmcp" })
         }).then(function (r) {
-          return text(r.ok ? "Brief sent. NOCAP will reply to " + input.email + "." : "Could not send the brief (HTTP " + r.status + "). Email connect.nocap@gmail.com instead.");
+          return text(r.ok ? "Brief sent. NoCap will reply to " + input.email + "." : "Could not send the brief (HTTP " + r.status + "). Email connect.nocap@gmail.com instead.");
         });
       }
     }
