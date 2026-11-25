@@ -5,6 +5,7 @@ import { scrollToSection } from "@/lib/scroll";
 import { mergeServices, saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
 import { cn } from "@/lib/utils";
+import { sized, srcSet } from "@/lib/img";
 
 export default function Expertise() {
   const [active, setActive] = useState(0);
@@ -71,7 +72,10 @@ export default function Expertise() {
                 >
                   <div className="relative mt-4">
                     <img
-                      src={imgSrc}
+                      src={sized(imgSrc, 800)}
+                      srcSet={srcSet(imgSrc, [480, 800, 1200])}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      decoding="async"
                       alt={service.title}
                       loading="lazy"
                       style={{ objectPosition: content.imagePos?.[`service.${i}`] }}

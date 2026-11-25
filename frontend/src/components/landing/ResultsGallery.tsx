@@ -3,6 +3,7 @@ import { Eye, Heart } from "lucide-react";
 import { mergeResults, saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
 import Starburst from "./Starburst";
+import { sized, srcSet } from "@/lib/img";
 
 const PLACEMENTS = [
   "left-[1%] top-[12%] w-28 sm:w-44 -rotate-6",
@@ -69,7 +70,10 @@ export default function ResultsGallery() {
                   className="relative overflow-hidden rounded-2xl bg-black shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
                 >
                   <img
-                    src={img}
+                    src={sized(img, 800)}
+                    srcSet={srcSet(img, [480, 800, 1200])}
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                    decoding="async"
                     alt={`Reel result ${i + 1}`}
                     loading="lazy"
                     style={{ objectPosition: content.imagePos?.[`results.${i}`] }}

@@ -1,0 +1,5 @@
+# Vite puts content-hashed files here (index-XXXX.js, fonts...): a new build gets new
+# names, so browsers can cache these for a year without ever seeing stale files.
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>

@@ -4,6 +4,7 @@ import { DEFAULT_ART } from "@/lib/data";
 import { saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
 import Starburst from "./Starburst";
+import { sized, srcSet } from "@/lib/img";
 
 export default function ArtBreak() {
   const { content, refresh, editMode } = useSiteContent();
@@ -23,7 +24,11 @@ export default function ArtBreak() {
   return (
     <section ref={ref} className="relative overflow-hidden bg-[#0D0F0E] py-8 sm:py-12" data-testid="art-break">
       <motion.img
-        src={art}
+        src={sized(art, 1600)}
+        srcSet={srcSet(art, [800, 1200, 1600, 2000])}
+        sizes="100vw"
+        loading="lazy"
+        decoding="async"
         alt="NOCAP creator collage"
         onError={() => setArtFailed(true)}
         style={{ x, scale: 1.12, objectPosition: content.imagePos?.["art"] }}

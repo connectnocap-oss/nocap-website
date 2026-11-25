@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { sized } from "@/lib/img";
 
 interface DraftSlot {
   name: string;
@@ -100,7 +101,7 @@ export default function LogoWall() {
             data-testid={`brand-slot-${i}`}
           >
             {brand.image ? (
-              <img src={brand.image} alt={brand.name} className="max-h-16 w-auto max-w-full object-contain" />
+              <img src={sized(brand.image, 256)} alt={brand.name} loading="lazy" decoding="async" className="max-h-16 w-auto max-w-full object-contain" />
             ) : (
               <span className={brand.className}>{brand.name}</span>
             )}

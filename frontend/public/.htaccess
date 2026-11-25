@@ -12,6 +12,13 @@ AddType "application/xml; charset=utf-8" .xml
   Header append Vary Accept
 </IfModule>
 
+<IfModule mod_headers.c>
+  # Un-hashed static images/icons in the site root: cache for a week
+  <FilesMatch "\.(png|jpe?g|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
 RewriteEngine On
 RewriteBase /
 
