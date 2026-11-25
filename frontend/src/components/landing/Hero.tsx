@@ -7,6 +7,7 @@ import { scrollToSection } from "@/lib/scroll";
 import { saveContent, uploadImage, useSiteContent, useText } from "@/lib/content";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { sized, srcSet } from "@/lib/img";
 
 const HOOK_LINES = [
   { key: "hero.line1", serif: false },
@@ -134,7 +135,11 @@ export default function Hero() {
           <AnimatePresence mode="popLayout">
             <motion.img
               key={slide.src}
-              src={slide.src}
+              src={sized(slide.src, 1600)}
+              srcSet={srcSet(slide.src, [800, 1200, 1600, 2000])}
+              sizes="(min-width: 1600px) 1600px, 100vw"
+              fetchPriority={index === 0 ? "high" : "auto"}
+              decoding="async"
               alt={slide.title}
               initial={{ opacity: 0, scale: reduce ? 1 : 1.08 }}
               animate={{ opacity: 1, scale: 1 }}

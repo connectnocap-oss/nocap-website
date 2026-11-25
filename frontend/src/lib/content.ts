@@ -86,7 +86,7 @@ const fixImageUrls = (value: unknown): unknown => {
 
 export const fetchContent = async (): Promise<SiteContent> =>
   fixImageUrls(
-    (await apiGet<{ data: SiteContent }>("/content")).data
+    (await apiGet<{ data: SiteContent }>(getToken() ? `/content?fresh=${Date.now()}` : "/content")).data
   ) as SiteContent;
 
 export const fetchEnquiries = async (): Promise<Enquiry[]> =>

@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import { scrollToSection } from "@/lib/scroll";
 import { mergeClients, saveContent, useSiteContent, useText } from "@/lib/content";
 import ImageEditDialog from "./ImageEditDialog";
+import { sized, srcSet } from "@/lib/img";
 
 export default function ClientsLead() {
   const { content, refresh, editMode } = useSiteContent();
@@ -88,7 +89,10 @@ export default function ClientsLead() {
                 </div>
                 <div className="relative w-full sm:w-40 lg:w-48">
                   <img
-                    src={imgSrc}
+                    src={sized(imgSrc, 800)}
+                    srcSet={srcSet(imgSrc, [480, 800, 1200])}
+                    sizes="(min-width: 1024px) 192px, (min-width: 640px) 160px, 100vw"
+                    decoding="async"
                     alt={c.client}
                     loading="lazy"
                     style={{ objectPosition: content.imagePos?.[`client.${i}`] }}

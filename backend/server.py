@@ -1,7 +1,8 @@
 import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, APIRouter, Depends, UploadFile, File, HTTPException, Request
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, Response
+from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 import os
@@ -24,6 +25,7 @@ from lib.db import client, db, ensure_indexes
 from lib.storage import init_storage, put_object, get_object, APP_NAME
 from lib.email import send_enquiry_notification
 from lib.indexnow import notify_content_changed
+from lib.images import ALLOWED_WIDTHS, RESIZABLE_TYPES, resize_to_webp
 
 JWT_ALGORITHM = "HS256"
 LOCKOUT_THRESHOLD = 5
@@ -213,23 +215,42 @@ async def upload_file(file: UploadFile = File(...), _: None = Depends(require_ad
     return {"path": result["path"], "url": f"/api/files/{result['path']}"}
 
 @api_router.get("/files/{path:path}")
-async def serve_file(path: str):
+async def serve_file(path: str, w: Optional[int] = None):
+    if w is not None and w not in ALLOWED_WIDTHS:
+        raise HTTPException(status_code=400, detail=f"w must be one of {sorted(ALLOWED_WIDTHS)}")
     record = await db.files.find_one({"storage_path": path, "is_deleted": False})
     if not record:
         raise HTTPException(status_code=404, detail="File not found")
-    data, content_type = await asyncio.to_thread(get_object, path)
+    try:
+        data, content_type = await asyncio.to_thread(get_object, path)
+    except ClientError as exc:
+        if exc.response.get("Error", {}).get("Code") in ("NoSuchKey", "404", "NotFound"):
+            logger.warning("file record exists but object is missing in storage: %s", path)
+            raise HTTPException(status_code=404, detail="File not found")
+        raise
+    media_type = record.get("content_type") or content_type
+    if w is not None and media_type in RESIZABLE_TYPES:
+        try:
+            resized = await asyncio.to_thread(resize_to_webp, data, w)
+            if resized:
+                data, media_type = resized
+        except Exception as exc:  # a bad image must never break the page: serve the original
+            logger.warning("resize failed for %s at w=%s: %s", path, w, exc)
     return Response(
-    content=data,
-    media_type=record.get("content_type") or content_type,
-    headers={
-        "Cache-Control": "public, max-age=31536000, immutable"
-    }
-)
+        content=data,
+        media_type=media_type,
+        headers={"Cache-Control": "public, max-age=31536000, immutable"},
+    )
 
 @api_router.get("/content")
 async def get_content():
     doc = await db.content.find_one({"id": "site"})
-    return {"data": (doc or {}).get("data", {})}
+    # Let the CDN serve this for 60s (and stale for 5 min while it refreshes) so visitors
+    # don't wait on the database. The admin panel adds a cache-busting query to see edits instantly.
+    return JSONResponse(
+        {"data": (doc or {}).get("data", {})},
+        headers={"Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"},
+    )
 
 @api_router.put("/content")
 async def put_content(update: ContentUpdate, _: None = Depends(require_admin)):

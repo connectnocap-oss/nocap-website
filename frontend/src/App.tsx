@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { ContentContext, fetchContent, getToken } from "@/lib/content";
 import Home from "@/pages/Home";
-import Admin from "@/pages/Admin";
+const Admin = lazy(() => import("@/pages/Admin"));
 
 export default function App() {
   const queryClient = useQueryClient();
@@ -25,7 +25,7 @@ export default function App() {
     <ContentContext.Provider value={{ content: data ?? {}, refresh, editMode, setEditMode }}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
       </Routes>
       <Toaster />
     </ContentContext.Provider>
